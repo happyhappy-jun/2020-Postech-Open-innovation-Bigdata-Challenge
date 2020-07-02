@@ -16,7 +16,8 @@ importWeather <- function(){
   data_p[is.na(data_p)] <- 0
   
   data <- merge(data_t, data_p, by=c("날짜","지점"))
-  data["날짜"]<-sapply(data["날짜"], function(x) strptime(x,format="%Y-%m-%d"))
+  names(data) <- c("date","location","avgTemp","minTemp","maxTemp","precipitation")
+  data["date"]<-sapply(data["date"], function(x) as.Date(x,format="%Y-%m-%d"))
   return(data)
 }
 
@@ -24,10 +25,16 @@ importWeather <- function(){
 importEnergy <- function(){
   data <- read.csv(file="SolarPV_Elec_Problem.csv",header=F,stringsAsFactors=FALSE)
   names(data) <- c("datetime","amount")
-  data["datetime"]<-sapply(data["datetime"], function(x) strptime(x,format="%Y-%m-%dT%H:%M:%S+09:00"))
+  data["datetime"]<-sapply(data["datetime"], function(x) as.POSIXlt(x,format="%Y-%m-%dT%H:%M:%S+09:00",tz="Asia/Seoul"))
+  data$date<-as.Date(data$datetime,"%Y-%m-%d")
+  data$time<-as.integer(format(data$datetime,"%H"))+as.integer(format(data$datetime,"%M"))/15*0.25
   return(data)
 }
 
 
 weather <- importWeather()
 energy <- importEnergy()
+data <- merge(weather, energy, by="date")
+
+interaction.plot(as.integer(time/100), as.integer(precipitation/10), amount, col=c(time*2))
+
