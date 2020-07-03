@@ -13,11 +13,11 @@ importWeather <- function(){
   
   data_t<-rbind(data_t_n, data_t_p, data_t_s)
   data_p<-rbind(data_p_n, data_p_p, data_p_s)
-  data_p[is.na(data_p)] <- 0
+  #data_p[is.na(data_p)] <- 0
   
   data <- merge(data_t, data_p, by=c("날짜","지점"))
   names(data) <- c("date","location","avgTemp","minTemp","maxTemp","precipitation")
-  data["date"]<-sapply(data["date"], function(x) as.Date(x,format="%Y-%m-%d"))
+  data$date<-as.Date(data$date)
   return(data)
 }
 
@@ -25,8 +25,8 @@ importWeather <- function(){
 importEnergy <- function(){
   data <- read.csv(file="SolarPV_Elec_Problem.csv",header=F,stringsAsFactors=FALSE)
   names(data) <- c("datetime","amount")
+  data$date<-as.Date(data$datetime)
   data["datetime"]<-sapply(data["datetime"], function(x) as.POSIXlt(x,format="%Y-%m-%dT%H:%M:%S+09:00",tz="Asia/Seoul"))
-  data$date<-as.Date(data$datetime,"%Y-%m-%d")
   data$time<-as.integer(format(data$datetime,"%H"))+as.integer(format(data$datetime,"%M"))/15*0.25
   return(data)
 }
@@ -36,5 +36,18 @@ weather <- importWeather()
 energy <- importEnergy()
 data <- merge(weather, energy, by="date")
 
-interaction.plot(as.integer(time/100), as.integer(precipitation/10), amount, col=c(time*2))
 
+data_national <- data[data$location == "전국",]
+attach(data_national)
+
+par(mfrow=c(2,1))
+hist(precipitation[precipitation>0], breaks = 30, col = "lightblue", main="Histogram of precipitation")
+hist(amount[amount>0], breaks = 30, col = "green", main="Histogram of Amount" )
+
+library(scatterplot3d)
+par(mfrow=c(1,1))
+scatterplot3d(date, time, amount, highlight.3d=TRUE, col.axis="blue", col.grid="lightblue", main="date-time-amount", pch=20)
+
+data_national_precipZero <- data_national[precipitation == 0,]
+attach(data_national_precipZero)
+scatterplot3d(avgTemp, time, amount, highlight.3d=TRUE, col.axis="blue", col.grid="lightblue", main="avgTemp-time-amount", pch=20)
