@@ -1,24 +1,26 @@
 # %%
 
 import tensorflow as tf
-
+from tensorflow.keras.layers import RepeatVector
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
 
+# matplotlib 초기화
 mpl.rcParams['figure.figsize'] = (8, 6)
 mpl.rcParams['axes.grid'] = False
 
 # %%
-tf.random.set_seed(10)
+
+tf.random.set_seed(100)
 BATCH_SIZE = 128
 BUFFER_SIZE = 10000
 
 # %%
 
-df = pd.read_csv("data/datefrom1st.csv")
+df = pd.read_csv("../data/datefrom1st.csv")
 df.index = df.datetime
 df = df.drop(
     ["temperature", "difference", "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
@@ -35,18 +37,18 @@ features = df
 
 # %%
 
-def multivariate_data(dataset, target, start_index, end_index, history_size,
+def multivariate_data(_dataset, target, start_index, end_index, history_size,
                       target_size, step, single_step=False):
     data = []
     labels = []
 
     start_index = start_index + history_size
     if end_index is None:
-        end_index = len(dataset) - target_size
+        end_index = len(_dataset) - target_size
 
     for i in range(start_index, end_index):
         indices = range(i - history_size, i, step)
-        data.append(dataset[indices])
+        data.append(_dataset[indices])
 
         if single_step:
             labels.append(target[i + target_size])
@@ -123,8 +125,8 @@ future_target = 4 * 24
 x_train_multi, y_train_multi = multivariate_data(dataset, dataset[:, 1], 0,
                                                  TRAIN_SPLIT, past_history,
                                                  future_target, STEP)
-x_val_multi, y_val_multi = multivariate_data(dataset, dataset[:, 1],
-                                             TRAIN_SPLIT, None, past_history,
+x_val_multi, y_val_multi = multivariate_data(dataset, dataset[:, 1], TRAIN_SPLIT,
+                                             None, past_history,
                                              future_target, STEP)
 
 # %%
@@ -159,39 +161,25 @@ def multi_step_plot(history, true_future, prediction):
 for x, y in train_data_multi.take(1):
     multi_step_plot(x[0], y[0], np.array([0]))
 
-#%%
-x_train_multi.shape
-
-
 # %%
-import tensorflow as tf
-from tensorflow.keras.layers import RepeatVector
 
-multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(100,activation="relu",
-                                          return_sequences=True,
-                                          input_shape=x_train_multi.shape[-2:]))
-multi_step_model.add(tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(1)))
-
-# %%
-multi_step_model.summary()
-
-# %%
 
 EPOCHS = 20
 EVALUATION_INTERVAL = 200
-from tensorflow.keras.utils import multi_gpu_model
 
-multi_step_model = multi_gpu_model(multi_step_model, gpus=4)
+mirrored_strategy = tf.distribute.MirroredStrategy()
 
-multi_step_model.compile(optimizer=tf.keras.optimizers.RMSprop(), loss='mae')
-multi_step_history = multi_step_model.fit(train_data_multi, epochs=EPOCHS,
-                                          steps_per_epoch=EVALUATION_INTERVAL,
-                                          validation_data=val_data_multi,
-                                          validation_steps=50)
-
-# %%
-
+with mirrored_strategy.scope():
+    multi_step_model = tf.keras.models.Sequential()
+    multi_step_model.add(tf.keras.layers.LSTM(100, activation="relu",
+                                              return_sequences=True,
+                                              input_shape=x_train_multi.shape[-2:]))
+    multi_step_model.add(tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(1)))
+    multi_step_model.compile(optimizer=tf.keras.optimizers.RMSprop(), loss='mae')
+    multi_step_history = multi_step_model.fit(train_data_multi, epochs=EPOCHS,
+                                              steps_per_epoch=EVALUATION_INTERVAL,
+                                              validation_data=val_data_multi,
+                                              validation_steps=50)
 
 # %%
 
