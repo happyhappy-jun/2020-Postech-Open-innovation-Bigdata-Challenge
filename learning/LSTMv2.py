@@ -32,9 +32,9 @@ tf.random.set_seed(10)
 df = pd.read_csv("../data/datefrom1st.csv")
 df.index = df.datetime
 df = df.drop(
-    ["temperature", "difference", "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
+    ["temperature", "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
-
+df["difference"] = df.astype('int32')
 
 #%%
 df.corr()
@@ -146,7 +146,7 @@ multi_step_model = multi_gpu_model(multi_step_model, gpus=8)
 
 multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
-history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=32*4, validation_data=(test_X, test_y), verbose=2, shuffle=False)
+history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=32*8, validation_data=(test_X, test_y), verbose=2, shuffle=False)
 # plot history
 pyplot.plot(history.history['loss'], label='train')
 pyplot.plot(history.history['val_loss'], label='test')
