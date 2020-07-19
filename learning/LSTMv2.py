@@ -1,17 +1,11 @@
-#%%
-
-
-
-# %%
-
 import tensorflow as tf
-
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
+from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, ReduceLROnPlateau
 
 mpl.rcParams['figure.figsize'] = (8, 6)
 mpl.rcParams['axes.grid'] = False
@@ -20,32 +14,37 @@ mpl.rcParams['axes.grid'] = False
 tf.random.set_seed(10)
 BATCH_SIZE = 128
 BUFFER_SIZE = 10000
-EPOCH=200
-# %%
+EPOCH = 300
 
+# %%
+past_history = 4 * 24 * 10
+future_target = 4 * 24
+STEP = 4
+
+
+# %%
 def root_mean_squared_error_loss(y_true, y_pred):
     return tf.keras.backend.sqrt(tf.keras.losses.MSE(y_true, y_pred))
-
 
 
 tf.random.set_seed(10)
 df = pd.read_csv("../data/datefrom1st.csv")
 df.index = df.datetime
 df = df.drop(
-    ["temperature", "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
+    ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
 
-#%%
+# %%
 df.corr()
-#%%
+# %%
 
 TRAIN_SPLIT = int(len(df.index) * 0.8)
 scaler = MinMaxScaler().fit(df)
 values = scaler.transform(df)
 save = values
 print(values)
-#%%
+# %%
 
 train = values[:TRAIN_SPLIT, :]
 test = values[TRAIN_SPLIT:, :]
@@ -59,9 +58,7 @@ test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
 print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
 
 
-
-#%%
-
+# %%
 def plot_train_history(history, title):
     loss = history.history['loss']
     val_loss = history.history['val_loss']
@@ -129,9 +126,12 @@ import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(200,activation="relu",
-                                              return_sequences=True,
-                                              input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.LSTM(300,
+                                          return_sequences=True,
+                                          input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.PReLU())
+multi_step_model.add(tf.keras.layers.Dense(300))
+multi_step_model.add(tf.keras.layers.LeakyReLU())
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 # %%
@@ -141,7 +141,6 @@ multi_step_model.summary()
 from matplotlib import pyplot
 from tensorflow.keras.utils import multi_gpu_model
 from tensorflow.python.client import device_lib
-
 
 EVALUATION_INTERVAL = 200
 
@@ -155,6 +154,19 @@ def get_gpu_num():
     return len(get_available_gpus())
 
 
+path_checkpoint = '23_checkpoint.keras'
+callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
+                                      monitor='val_loss',
+                                      verbose=1,
+                                      save_weights_only=True,
+                                      save_best_only=True)
+
+callback_early_stopping = EarlyStopping(monitor='val_loss', patience=300, verbose=1)
+
+callback_tensorboard = TensorBoard(log_dir='./23_logs/', histogram_freq=0, write_graph=False)
+callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, min_lr=1e-4, patience=0,verbose=1)
+callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard, callback_reduce_lr]
+
 print(f"[+] Available GPUs")
 print(get_available_gpus())
 
@@ -166,7 +178,8 @@ else:
 
 multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
-history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=32*8, validation_data=(test_X, test_y), verbose=2, shuffle=False)
+history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=32 * 8, validation_data=(test_X, test_y),
+                               verbose=2, shuffle=True, callbacks=callbacks)
 # plot history
 pyplot.plot(history.history['loss'], label='train')
 pyplot.plot(history.history['val_loss'], label='test')
@@ -174,11 +187,11 @@ pyplot.legend()
 pyplot.show()
 pyplot.savefig("test.png")
 
-#%%
+# %%
+
 from numpy import concatenate
 from math import sqrt
 from sklearn.metrics import mean_squared_error
-
 
 # make a prediction
 yhat = multi_step_model.predict(test_X)[:, :, 0]
@@ -188,20 +201,19 @@ test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
 # invert scaling for forecast
 inv_yhat = concatenate((yhat, test_X), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
-inv_yhat = inv_yhat[:,0]
+inv_yhat = inv_yhat[:, 0]
 # invert scaling for actual
 test_y = test_y.reshape((len(test_y), 1))
 inv_y = concatenate((test_y, test_X), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
-inv_y = inv_y[:,0]
+inv_y = inv_y[:, 0]
 # calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 print('Test RMSE: %.6f' % rmse)
 print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
-print('Test nMAE: %.6f' % (mean_squared_error(inv_y, inv_yhat)/7028))
+print('Test nMAE: %.6f' % (mean_squared_error(inv_y, inv_yhat) / 7028))
 
-pyplot.plot([x for x in range (1000)], inv_y[-1000:], 'b', label='true')
-pyplot.plot([x for x in range (1000)], inv_yhat[-1000:], 'r', label = 'pred')
+pyplot.plot([x for x in range(1000)], inv_y[-1000:], 'b', label='true')
+pyplot.plot([x for x in range(1000)], inv_yhat[-1000:], 'r', label='pred')
 pyplot.legend(loc='upper left')
 pyplot.savefig("out.png")
-
