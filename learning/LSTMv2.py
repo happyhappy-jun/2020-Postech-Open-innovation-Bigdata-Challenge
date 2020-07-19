@@ -139,10 +139,30 @@ multi_step_model.summary()
 
 # %%
 from matplotlib import pyplot
-EVALUATION_INTERVAL = 200
 from tensorflow.keras.utils import multi_gpu_model
+from tensorflow.python.client import device_lib
 
-multi_step_model = multi_gpu_model(multi_step_model, gpus=8)
+
+EVALUATION_INTERVAL = 200
+
+
+def get_available_gpus():
+    local_device_protos = device_lib.list_local_devices()
+    return [x.name for x in local_device_protos if x.device_type == 'GPU']
+
+
+def get_gpu_num():
+    return len(get_available_gpus())
+
+
+print(f"[+] Available GPUs")
+print(get_available_gpus())
+
+if get_gpu_num() < 2:
+    print(f"[+] Available multiple GPU not found... Just use CPU! XD")
+else:
+    print(f"[+] {get_gpu_num()} GPUs found! Setting to GPU model...")
+    multi_step_model = multi_gpu_model(multi_step_model, gpus=get_gpu_num())
 
 multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
