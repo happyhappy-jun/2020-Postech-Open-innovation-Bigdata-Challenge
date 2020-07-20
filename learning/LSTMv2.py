@@ -14,13 +14,13 @@ mpl.rcParams['axes.grid'] = False
 tf.random.set_seed(10)
 BATCH_SIZE = 128
 BUFFER_SIZE = 10000
-EPOCH = 300
+EPOCH = 1000
 
 # %%
 past_history = 4 * 24 * 10
 future_target = 4 * 24
 STEP = 4
-SHIFT_STEP = 2
+SHIFT_STEP = 1
 
 # %%
 def root_mean_squared_error_loss(y_true, y_pred):
@@ -36,7 +36,7 @@ df = df.drop(
 df["difference"] = df.astype('int32')
 df['shift1'] = df['result'].shift(-SHIFT_STEP)
 df['shift2'] = df['result'].shift(-(SHIFT_STEP+1))
-
+df['shift3'] = df['result'].shift(-(SHIFT_STEP+2))
 
 
 # %%
@@ -141,10 +141,10 @@ import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(300,
+multi_step_model.add(tf.keras.layers.LSTM(300, 
                                           return_sequences=True,
                                           input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.PReLU())
+multi_step_model.add(tf.keras.layers.ReLU())
 multi_step_model.add(tf.keras.layers.Dense(300))
 multi_step_model.add(tf.keras.layers.LeakyReLU())
 multi_step_model.add(tf.keras.layers.Dense(1))
@@ -176,10 +176,10 @@ callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
                                       save_weights_only=True,
                                       save_best_only=True)
 
-callback_early_stopping = EarlyStopping(monitor='val_loss', patience=300, verbose=1)
+callback_early_stopping = EarlyStopping(monitor='val_loss', patience=80, verbose=1)
 
 callback_tensorboard = TensorBoard(log_dir='./23_logs/', histogram_freq=0, write_graph=False)
-callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, min_lr=1e-4, patience=0,verbose=1)
+callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.8, min_lr=1e-5, patience=0,verbose=1)
 callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard, callback_reduce_lr]
 
 print(f"[+] Available GPUs")
@@ -195,6 +195,13 @@ multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
 history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=32 * 8, validation_data=(test_X, test_y),
                                verbose=2, shuffle=True, callbacks=callbacks)
+
+try:
+    multi_step_model.load_weights(path_checkpoint)
+except Exception as error:
+    print("Error trying to load checkpoint.")
+    print(error)
+
 # plot history
 pyplot.plot(history.history['loss'], label='train')
 pyplot.plot(history.history['val_loss'], label='test')
