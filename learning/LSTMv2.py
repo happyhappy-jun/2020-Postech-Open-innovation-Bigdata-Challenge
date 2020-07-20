@@ -20,7 +20,7 @@ EPOCH = 300
 past_history = 4 * 24 * 10
 future_target = 4 * 24
 STEP = 4
-
+SHIFT_STEP = 2
 
 # %%
 def root_mean_squared_error_loss(y_true, y_pred):
@@ -34,6 +34,10 @@ df = df.drop(
     ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
+df['shift1'] = df['result'].shift(-SHIFT_STEP)
+df['shift2'] = df['result'].shift(-(SHIFT_STEP+1))
+
+
 
 # %%
 df.corr()
@@ -122,6 +126,17 @@ def multi_step_plot(history, true_future, prediction):
 
 
 # %%
+
+def fit_by_batch(X, y, batch_size):
+    n_batches_for_epoch = X.shape[0]//batch_size
+    for i in range(n_batches_for_epoch):
+        index_batch = range(X.shape[0])[batch_size*i:batch_size*(i+1)]
+        X_batch =X[index_batch][0].toarray()[0] #from sparse to array
+        X_batch=X_batch.reshape(1,X_batch.shape[0],1 ) # to 3d array
+        y_batch = y[index_batch,][0]
+        yield(np.array(X_batch),y_batch)
+
+
 import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
 
