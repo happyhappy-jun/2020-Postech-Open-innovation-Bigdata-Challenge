@@ -141,7 +141,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(300, 
+multi_step_model.add(tf.keras.layers.GRU(300, 
                                           return_sequences=True,
                                           input_shape=(train_X.shape[1], train_X.shape[2])))
 multi_step_model.add(tf.keras.layers.ReLU())
