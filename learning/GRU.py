@@ -209,11 +209,7 @@ model.compile(loss=loss_mse_warmup, optimizer=keras.optimizers.SGD(learning_rate
 model.summary()
 #%%
 path_checkpoint = '23_checkpoint.keras'
-callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
- monitor='val_loss',
-verbose=1,
-save_weights_only=True,
-save_best_only=True)
+callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,monitor='val_loss',verbose=1,save_weights_only=True, save_best_only=True)
 
 
 #%%
