@@ -20,7 +20,7 @@ BUFFER_SIZE = 10000
 
 # %%
 
-df = pd.read_csv("../data/datefrom1st.csv")
+df = pd.read_csv("../../data/datefrom1st.csv")
 df.index = df.datetime
 df = df.drop(
     ["temperature", "difference", "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
