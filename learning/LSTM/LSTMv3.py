@@ -15,7 +15,7 @@ mpl.rcParams['axes.grid'] = False
 tf.random.set_seed(10)
 BATCH_SIZE = 128
 BUFFER_SIZE = 10000
-EPOCH = 1000
+EPOCH = 1
 
 # %%
 past_history = 4 * 24 * 10
@@ -38,6 +38,7 @@ df["difference"] = df.astype('int32')
 df['shift1'] = df['result'].shift(-SHIFT_STEP)
 df['shift2'] = df['result'].shift(-(SHIFT_STEP+1))
 df['shift3'] = df['result'].shift(-(SHIFT_STEP+2))
+df.fillna(0)
 
 
 # %%
@@ -220,6 +221,8 @@ from sklearn.metrics import mean_squared_error
 # make a prediction
 yhat = multi_step_model.predict(test_X)[:, :, 0]
 print(yhat)
+print(yhat.shape)
+yhat.fillna
 # make a prediction
 test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
 # invert scaling for forecast
