@@ -6,6 +6,7 @@ import os
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, ReduceLROnPlateau
+from tensorflow.keras.layers import TimeDistributed
 
 mpl.rcParams['figure.figsize'] = (8, 6)
 mpl.rcParams['axes.grid'] = False
@@ -28,7 +29,7 @@ def root_mean_squared_error_loss(y_true, y_pred):
 
 
 tf.random.set_seed(10)
-df = pd.read_csv("../data/datefrom1st.csv")
+df = pd.read_csv("../../data/datefrom1st.csv")
 df.index = df.datetime
 df = df.drop(
     ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
@@ -141,13 +142,11 @@ import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.GRU(300, 
-                                          return_sequences=True,
-                                          input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.ReLU())
-multi_step_model.add(tf.keras.layers.Dense(300))
-multi_step_model.add(tf.keras.layers.LeakyReLU())
-multi_step_model.add(tf.keras.layers.Dense(1))
+multi_step_model.add(tf.keras.layers.LSTM(300, activation='relu', input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.RepeatVector(2))
+multi_step_model.add(tf.keras.layers.LSTM(300, activation='relu', return_sequences=True))
+multi_step_model.add(TimeDistributed(tf.keras.layers.Dense(1)))
+
 
 # %%
 multi_step_model.summary()
@@ -169,7 +168,7 @@ def get_gpu_num():
     return len(get_available_gpus())
 
 
-path_checkpoint = '23_checkpoint.keras'
+path_checkpoint = '../23_checkpoint.keras'
 callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
                                       monitor='val_loss',
                                       verbose=1,
@@ -178,7 +177,7 @@ callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
 
 callback_early_stopping = EarlyStopping(monitor='val_loss', patience=80, verbose=1)
 
-callback_tensorboard = TensorBoard(log_dir='./23_logs/', histogram_freq=0, write_graph=False)
+callback_tensorboard = TensorBoard(log_dir='../23_logs/', histogram_freq=0, write_graph=False)
 callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.8, min_lr=1e-5, patience=0,verbose=1)
 callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard, callback_reduce_lr]
 
