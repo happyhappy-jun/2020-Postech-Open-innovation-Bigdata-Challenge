@@ -29,6 +29,7 @@ def root_mean_squared_error_loss(y_true, y_pred):
 
 tf.random.set_seed(10)
 df = pd.read_csv("../../data/datefrom1st.csv")
+df = df.loc[:"2020-01-30"]
 df.index = df.datetime
 df = df.drop(
     ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
@@ -40,7 +41,7 @@ df['shift3'] = df['result'].shift(-(SHIFT_STEP+2))
 
 
 # %%
-df.corr()
+df
 # %%
 
 TRAIN_SPLIT = int(len(df.index) * 0.8)
