@@ -142,9 +142,12 @@ import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(300, activation='relu', input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.RepeatVector(2))
-multi_step_model.add(tf.keras.layers.LSTM(300, activation='relu', return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(train_X.shape[1], activation='relu', return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.LSTM(200, activation='relu', return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(1, activation='relu'))
+multi_step_model.add(tf.keras.layers.RepeatVector(train_X.shape[1]))
+multi_step_model.add(tf.keras.layers.LSTM(train_X.shape[1], activation='relu', return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(200, activation='relu', return_sequences=True))
 multi_step_model.add(TimeDistributed(tf.keras.layers.Dense(1)))
 
 
