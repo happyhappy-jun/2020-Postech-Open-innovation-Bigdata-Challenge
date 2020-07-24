@@ -1,5 +1,4 @@
 # %%
-EPOCHS =5
 
 import numpy as np
 import tensorflow as tf
@@ -8,24 +7,13 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Input, Dense, GRU, Embedding
-from tensorflow.keras.optimizers import RMSprop, Adam
+from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, ReduceLROnPlateau
 from tensorflow.keras.backend import square, mean
 
-from matplotlib import pyplot
-from tensorflow.keras.utils import multi_gpu_model
-from tensorflow.python.client import device_lib
 # %%
 
-def get_available_gpus():
-    local_device_protos = device_lib.list_local_devices()
-    return [x.name for x in local_device_protos if x.device_type == 'GPU']
-
-
-def get_gpu_num():
-    return len(get_available_gpus())
-
-tf.random.set_seed(42)
+tf.random.set_seed(10)
 raw_df = pd.read_csv("../../data/datefrom1st_revised.csv")
 raw_df.index = raw_df.datetime
 
@@ -42,11 +30,15 @@ df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:0
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
 df = df.fillna(0)
-ult = df.loc["2020-01-24 00:00:00":"2020-01-31 00:00:00"]
-df = df.loc[:"2020-01-24 00:00:00"]
+df = df.loc[:"2020-01-31 00:00:00"]
+ult = df.loc["2020-01-24 00:00:00":]
+TRAIN_SPLIT = int(len(df.index) * 0.8)
 print(df.head())
 
+dataset = df
+
 shift_days = 1
+STEP = 4
 shift_steps = shift_days * 24 * 4  # Number of hours.
 df_targets = df["result"].shift(-shift_steps)
 df = df.drop("result", axis=1)
@@ -82,7 +74,6 @@ x_scaler = MinMaxScaler()
 # %%
 
 x_train_scaled = x_scaler.fit_transform(x_train)
-print(x_train_scaled)
 ult_x_scaled = x_scaler.transform(ult.iloc[:, 1:])
 
 # %%
@@ -119,6 +110,7 @@ def batch_generator(batch_size, sequence_length):
         x_batch = np.zeros(shape=x_shape, dtype=np.float16)
 
         # Allocate a new array for the batch of output-signals.
+        print((batch_size, sequence_length, num_y_signals))
         y_shape = (batch_size, sequence_length, num_y_signals)
         y_batch = np.zeros(shape=y_shape, dtype=np.float16)
 
@@ -137,8 +129,7 @@ def batch_generator(batch_size, sequence_length):
 
 # %%
 
-batch_size = 256
-
+batch_size = 128
 
 # %%
 
@@ -178,6 +169,16 @@ validation_data = (np.expand_dims(x_test_scaled, axis=0),
 
 # %%
 
+model = Sequential()
+
+# %%
+
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.GRU(300, return_sequences=True, input_shape=(None, num_x_signals,)))
+model.add(tf.keras.layers.ReLU())
+model.add(tf.keras.layers.Dense(300))
+model.add(tf.keras.layers.LeakyReLU())
+model.add(tf.keras.layers.Dense(num_y_signals))
 
 # %%
 
@@ -215,15 +216,12 @@ def loss_mse_warmup(y_true, y_pred):
 # %%
 
 optimizer = RMSprop(lr=1e-3)
-mirrored_strategy = tf.distribute.MirroredStrategy()
-with mirrored_strategy.scope():
-    model = Sequential()
-    model.add(tf.keras.layers.LSTM(300, return_sequences=True, input_shape=(None, num_x_signals,)))
-    model.add(tf.keras.layers.ReLU())
-    model.add(tf.keras.layers.Dense(300))
-    model.add(tf.keras.layers.LeakyReLU())
-    model.add(tf.keras.layers.Dense(num_y_signals))
-    model.compile(loss=loss_mse_warmup, optimizer=Adam(lr=1e-3))
+
+# %%
+
+model.compile(loss=loss_mse_warmup, optimizer=optimizer)
+
+# %%
 
 model.summary()
 
@@ -239,15 +237,17 @@ callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
 # %%
 
 callback_early_stopping = EarlyStopping(monitor='val_loss',
-                                        patience=31, verbose=1)
+                                        patience=5, verbose=1)
 
 callback_tensorboard = TensorBoard(log_dir='./23_logs/',
                                    histogram_freq=0,
                                    write_graph=False)
 
-callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10,
-                              verbose=1, mode='auto', min_delta=0.0001,
-                                                            cooldown=0, min_lr=1e-6)
+callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss',
+                                       factor=0.1,
+                                       min_lr=1e-4,
+                                       patience=0,
+                                       verbose=1)
 callbacks = [callback_early_stopping,
              callback_checkpoint,
              callback_tensorboard,
@@ -256,7 +256,7 @@ callbacks = [callback_early_stopping,
 # %%
 
 model.fit(x=generator,
-          epochs=EPOCHS,
+          epochs=20,
           steps_per_epoch=100,
           validation_data=validation_data,
           callbacks=callbacks)
@@ -338,12 +338,9 @@ x = np.expand_dims(x, axis=0)
 y_pred = model.predict(x)
 y_pred_rescaled = y_scaler.inverse_transform(y_pred[0])
 signal_pred = y_pred_rescaled
-print(max(y_true))
-signal_true = y_scaler.inverse_transform(y_true)
-print(max(signal_true))
+signal_true = y_true
 plt.figure(figsize=(15, 5))
 plt.plot(signal_true, label='true')
-plt.plot(ult_y_test, label = 'orig')
 plt.plot(signal_pred, label='pred')
-plt.legend()
 plt.savefig("final.png")
+
