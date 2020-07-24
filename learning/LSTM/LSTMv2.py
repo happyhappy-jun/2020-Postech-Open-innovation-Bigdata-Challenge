@@ -38,7 +38,7 @@ df = df.drop(
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
 
-# target_X = df.loc["2020-01-30 00:00:00":"2020-01-30 23:45:00"]
+target_X = df.loc["2020-01-30 00:00:00":"2020-01-30 23:45:00"]
 
 df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
@@ -53,9 +53,15 @@ TRAIN_SPLIT = int(len(df.index) * 0.8)
 scaler = MinMaxScaler().fit(df)
 values = scaler.transform(df)
 
-ult_x_scaled = scaler.transform(ult.iloc[:, 1:])
-ult_y_test = ult.iloc[:,0].values.reshape(-1,1)
-ult_y_scaled = scaler.transform(ult_y_test)
+target_X = scaler.transform(target_X)
+target_X = target_X[:, 1:]
+
+
+ult_scaled = scaler.transform(ult)
+ult_x_scaled = ult_scaled[:,1:]
+ult_y_scaled = ult_scaled[:,0]
+
+
 # %%
 
 train = values[:TRAIN_SPLIT, :]
@@ -64,7 +70,7 @@ test = values[TRAIN_SPLIT:, :]
 train_X, train_y = train[:, 1:], train[:, 0]
 test_X, test_y = test[:, 1:], test[:, 0]
 # %%
-
+ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], 1, ult_x_scaled.shape[1]))
 train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
 test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
 print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
@@ -225,7 +231,6 @@ from sklearn.metrics import mean_squared_error
 
 # make a prediction
 yhat = multi_step_model.predict(ult_x_scaled)[:, :, 0]
-print(yhat)
 # make a prediction
 ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], ult_x_scaled.shape[2]))
 # invert scaling for forecast
@@ -233,7 +238,7 @@ inv_yhat = concatenate((yhat, ult_x_scaled), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:, 0]
 # invert scaling for actual
-test_y = test_y.reshape((len(ult_y_scaled), 1))
+ult_y_scaled = ult_y_scaled.reshape((len(ult_y_scaled), 1))
 inv_y = concatenate((ult_y_scaled, ult_x_scaled), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
@@ -244,6 +249,20 @@ print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
 print('Test nMAE: %.6f' % (mean_squared_error(inv_y, inv_yhat) / 7028))
 
 pyplot.plot(inv_y, 'b', label='true')
-pyplot.plot(inv_yhat, 'r', label='pred')
+pyplot.plot(inv_yhat, 'o', label='pred')
 pyplot.legend(loc='upper left')
 pyplot.savefig("out.png")
+#%%
+
+# make a prediction
+yhat = multi_step_model.predict(target_X)[:, :, 0]
+# make a prediction
+ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], ult_x_scaled.shape[2]))
+# invert scaling for forecast
+inv_yhat = concatenate((yhat, ult_x_scaled), axis=1)
+inv_yhat = scaler.inverse_transform(inv_yhat)
+inv_yhat = inv_yhat[:, 0]
+fig = plt.figure()
+plt.plot(inv_yhat, 'o', label='prediction')
+plt.legend()
+plt.savefig("final.png")
