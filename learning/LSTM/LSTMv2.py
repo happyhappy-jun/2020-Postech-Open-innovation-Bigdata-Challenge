@@ -27,28 +27,35 @@ def root_mean_squared_error_loss(y_true, y_pred):
     return tf.keras.backend.sqrt(tf.keras.losses.MSE(y_true, y_pred))
 
 
-tf.random.set_seed(10)
-df = pd.read_csv("../../data/datefrom1st.csv")
-df = df.loc[:"2020-01-30"]
-df.index = df.datetime
+tf.random.set_seed(42)
+raw_df = pd.read_csv("../../data/datefrom1st_revised.csv")
+raw_df.index = raw_df.datetime
+
+df = raw_df
+
 df = df.drop(
     ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
-df['shift1'] = df['result'].shift(-SHIFT_STEP)
-df['shift2'] = df['result'].shift(-(SHIFT_STEP+1))
-df['shift3'] = df['result'].shift(-(SHIFT_STEP+2))
 
+# target_X = df.loc["2020-01-30 00:00:00":"2020-01-30 23:45:00"]
 
-# %%
-df
+df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
+df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
+df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
+df = df.fillna(0)
+ult = df.loc["2020-01-24 00:00:00":"2020-01-31 00:00:00"]
+df = df.loc[:"2020-01-24 00:00:00"]
+
 # %%
 
 TRAIN_SPLIT = int(len(df.index) * 0.8)
 scaler = MinMaxScaler().fit(df)
 values = scaler.transform(df)
-save = values
-print(values)
+
+ult_x_scaled = scaler.transform(ult.iloc[:, 1:])
+ult_y_test = ult.iloc[:,0].values.reshape(-1,1)
+ult_y_scaled = scaler.transform(ult_y_test)
 # %%
 
 train = values[:TRAIN_SPLIT, :]
@@ -202,13 +209,13 @@ try:
 except Exception as error:
     print("Error trying to load checkpoint.")
     print(error)
-
-# plot history
-pyplot.plot(history.history['loss'], label='train')
-pyplot.plot(history.history['val_loss'], label='test')
-pyplot.legend()
-pyplot.show()
-pyplot.savefig("test.png")
+#
+# # plot history
+# pyplot.plot(history.history['loss'], label='train')
+# pyplot.plot(history.history['val_loss'], label='test')
+# pyplot.legend()
+# pyplot.show()
+# pyplot.savefig("test.png")
 
 # %%
 
@@ -217,17 +224,17 @@ from math import sqrt
 from sklearn.metrics import mean_squared_error
 
 # make a prediction
-yhat = multi_step_model.predict(test_X)[:, :, 0]
+yhat = multi_step_model.predict(ult_x_scaled)[:, :, 0]
 print(yhat)
 # make a prediction
-test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
+ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], ult_x_scaled.shape[2]))
 # invert scaling for forecast
-inv_yhat = concatenate((yhat, test_X), axis=1)
+inv_yhat = concatenate((yhat, ult_x_scaled), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:, 0]
 # invert scaling for actual
-test_y = test_y.reshape((len(test_y), 1))
-inv_y = concatenate((test_y, test_X), axis=1)
+test_y = test_y.reshape((len(ult_y_scaled), 1))
+inv_y = concatenate((ult_y_scaled, ult_x_scaled), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
 # calculate RMSE
@@ -236,7 +243,7 @@ print('Test RMSE: %.6f' % rmse)
 print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
 print('Test nMAE: %.6f' % (mean_squared_error(inv_y, inv_yhat) / 7028))
 
-pyplot.plot([x for x in range(1000)], inv_y[-1000:], 'b', label='true')
-pyplot.plot([x for x in range(1000)], inv_yhat[-1000:], 'r', label='pred')
+pyplot.plot(inv_y, 'b', label='true')
+pyplot.plot(inv_yhat, 'r', label='pred')
 pyplot.legend(loc='upper left')
 pyplot.savefig("out.png")
