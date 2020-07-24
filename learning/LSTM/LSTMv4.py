@@ -87,7 +87,8 @@ y_test = y_test.reshape(-1, 1)
 y_scaler = MinMaxScaler()
 y_train_scaled = y_scaler.fit_transform(y_train)
 y_test_scaled = y_scaler.transform(y_test)
-ult_y_scaled = y_scaler.transform(ult.iloc[:, 0])
+ult_y_test = ult.iloc[:,0].values.reshape(-1,1)
+ult_y_scaled = y_scaler.transform(ult_y_test)
 
 # %%
 
