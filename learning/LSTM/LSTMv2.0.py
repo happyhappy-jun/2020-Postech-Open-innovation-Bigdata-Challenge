@@ -12,9 +12,9 @@ mpl.rcParams['axes.grid'] = False
 
 # %%
 tf.random.set_seed(10)
-BATCH_SIZE = 32
+BATCH_SIZE = 128
 BUFFER_SIZE = 10000
-EPOCH = 1000
+EPOCH = 10
 
 # %%
 past_history = 4 * 24 * 10
@@ -26,36 +26,26 @@ SHIFT_STEP = 1
 def root_mean_squared_error_loss(y_true, y_pred):
     return tf.keras.backend.sqrt(tf.keras.losses.MSE(y_true, y_pred))
 
-def xy_split(d, scale, y=True):
-    d_trans = scale.transform(d)
-    if y:
-        d_x = d_trans[:,1:]
-        d_y = d_trans[:, 0]
-        d_x = d_x.reshape((d_x.shape[0], 1, d_x.shape[1]))
-        return d_x, d_y
-    if not y:
-        d_x = d_trans[:,1:]
-        d_x = d_x.reshape((d_x.shape[0], 1, d_x.shape[1]))
-        return d_x
-
 
 tf.random.set_seed(42)
 raw_df = pd.read_csv("../../data/datefrom1st_revised.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
+
 df = df.drop(
     ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
+
+target_X = df.loc["2020-01-30 00:00:00":"2020-01-30 23:45:00"]
 
 df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
 df = df.fillna(0)
 ult = df.loc["2020-01-24 00:00:00":"2020-01-31 00:00:00"]
-final_test = df.loc["2020-05-30 00:00:00":"2020-05-30 23:45:00"]
-df = df.loc[:"2020-05-30 00:00:00"]
+df = df.loc[:"2020-01-24 00:00:00"]
 
 # %%
 
@@ -63,26 +53,30 @@ TRAIN_SPLIT = int(len(df.index) * 0.8)
 scaler = MinMaxScaler().fit(df)
 values = scaler.transform(df)
 
+target_X = scaler.transform(target_X)
+target_X = target_X[:, 1:]
 
+
+ult_scaled = scaler.transform(ult)
+ult_x_scaled = ult_scaled[:,1:]
+ult_y_scaled = ult_scaled[:,0]
+
+
+# %%
 
 train = values[:TRAIN_SPLIT, :]
 test = values[TRAIN_SPLIT:, :]
-
-
 # split into input and outputs
-train_X, train_y = xy_split(train, scaler)
-test_X, test_y = xy_split(test, scaler)
-ult_X, ult_y = xy_split(ult, scaler)
-final_test_X, final_test_y = xy_split(final_test, scaler)
-
+train_X, train_y = train[:, 1:], train[:, 0]
+test_X, test_y = test[:, 1:], test[:, 0]
 # %%
-#target_X = target_X.reshape((target_X.shape[0], 1, target_X.shape[1]))
-#train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
-#test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
+ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], 1, ult_x_scaled.shape[1]))
+train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
+test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
 print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
 
 
-# %%x
+# %%
 def plot_train_history(history, title):
     loss = history.history['loss']
     val_loss = history.history['val_loss']
@@ -157,9 +151,20 @@ def fit_by_batch(X, y, batch_size):
         yield(np.array(X_batch),y_batch)
 
 
-print(train_X.shape)
 import tensorflow as tf
 from tensorflow.keras.layers import RepeatVector
+
+multi_step_model = tf.keras.models.Sequential()
+multi_step_model.add(tf.keras.layers.GRU(300, 
+                                          return_sequences=True,
+                                          input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.ReLU())
+multi_step_model.add(tf.keras.layers.Dense(300))
+multi_step_model.add(tf.keras.layers.LeakyReLU())
+multi_step_model.add(tf.keras.layers.Dense(1))
+
+# %%
+multi_step_model.summary()
 
 # %%
 from matplotlib import pyplot
@@ -188,23 +193,8 @@ callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
 callback_early_stopping = EarlyStopping(monitor='val_loss', patience=80, verbose=1)
 
 callback_tensorboard = TensorBoard(log_dir='../23_logs/', histogram_freq=0, write_graph=False)
-callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_lr=1e-7, patience=10,verbose=1)
+callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.8, min_lr=1e-5, patience=0,verbose=1)
 callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard, callback_reduce_lr]
-
-
-
-multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.GRU(300, 
-                                          return_sequences=True,
-                                          input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.ReLU())
-multi_step_model.add(tf.keras.layers.Dense(300))
-multi_step_model.add(tf.keras.layers.LeakyReLU())
-multi_step_model.add(tf.keras.layers.Dense(1))
-
-
-
-
 
 print(f"[+] Available GPUs")
 print(get_available_gpus())
@@ -217,7 +207,7 @@ else:
 
 multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
-history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
+history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=32 * 8, validation_data=(test_X, test_y),
                                verbose=2, shuffle=True, callbacks=callbacks)
 
 try:
@@ -239,30 +229,40 @@ from numpy import concatenate
 from math import sqrt
 from sklearn.metrics import mean_squared_error
 
+# make a prediction
+yhat = multi_step_model.predict(ult_x_scaled)[:, :, 0]
+# make a prediction
+ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], ult_x_scaled.shape[2]))
+# invert scaling for forecast
+inv_yhat = concatenate((yhat, ult_x_scaled), axis=1)
+inv_yhat = scaler.inverse_transform(inv_yhat)
+inv_yhat = inv_yhat[:, 0]
+# invert scaling for actual
+ult_y_scaled = ult_y_scaled.reshape((len(ult_y_scaled), 1))
+inv_y = concatenate((ult_y_scaled, ult_x_scaled), axis=1)
+inv_y = scaler.inverse_transform(inv_y)
+inv_y = inv_y[:, 0]
+# calculate RMSE
+rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
+print('Test RMSE: %.6f' % rmse)
+print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
+print('Test nMAE: %.6f' % (mean_squared_error(inv_y, inv_yhat) / 7028))
 
-def make_prediction(model, X, y, plot_name):
-    yhat = model.predict(X)[:, :, 0]
-    X_revert = X.reshape((X.shape[0], X.shape[2]))
-    inv_yhat = concatenate((yhat, X_revert), axis = 1)
-    inv_xyhat = scaler.inverse_transform(inv_yhat)
-    inv_yhat = inv_xyhat[:, 0]
-    print("inv_yhat shape {}".format(inv_yhat.shape))
-    y_revert = y.reshape((len(y), 1))
-    inv_y1 = concatenate((y_revert, X_revert), axis = 1)
-    print("after concate: {}".format(inv_y1.shape))
-    inv_y1 = scaler.inverse_transform(inv_y1)
-    inv_y = inv_y1[:, 0]
-    print(inv_y.shape)
-    rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
-    print('Test RMSE: %.6f' % rmse)
-    print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
+pyplot.plot(inv_y, 'b', label='true')
+pyplot.plot(inv_yhat, 'o', label='pred')
+pyplot.legend(loc='upper left')
+pyplot.savefig("out.png")
+#%%
 
-
-    fig = plt.figure
-    plt.plot(inv_y, 'b', label = 'true')
-    plt.plot(inv_yhat, 'g', label = 'pred')
-    plt.legend()
-    plt.savefig(plot_name)
-
-print(final_test_X.shape)
-make_prediction(multi_step_model, final_test_X, final_test_y, "final_test.png")
+# make a prediction
+yhat = multi_step_model.predict(target_X)[:, :, 0]
+# make a prediction
+ult_x_scaled = ult_x_scaled.reshape((ult_x_scaled.shape[0], ult_x_scaled.shape[2]))
+# invert scaling for forecast
+inv_yhat = concatenate((yhat, ult_x_scaled), axis=1)
+inv_yhat = scaler.inverse_transform(inv_yhat)
+inv_yhat = inv_yhat[:, 0]
+fig = plt.figure()
+plt.plot(inv_yhat, 'o', label='prediction')
+plt.legend()
+plt.savefig("final.png")
