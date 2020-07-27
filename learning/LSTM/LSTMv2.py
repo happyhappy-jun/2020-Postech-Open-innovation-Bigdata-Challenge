@@ -75,13 +75,6 @@ test_X, test_y = xy_split(test, scaler)
 ult_X, ult_y = xy_split(ult, scaler)
 final_test_X, final_test_y = xy_split(final_test, scaler)
 
-# %%
-#target_X = target_X.reshape((target_X.shape[0], 1, target_X.shape[1]))
-#train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
-#test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
-print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
-
-
 # %%x
 def plot_train_history(history, title):
     loss = history.history['loss']
@@ -159,10 +152,8 @@ def fit_by_batch(X, y, batch_size):
 
 print(train_X.shape)
 import tensorflow as tf
-from tensorflow.keras.layers import RepeatVector
 
 # %%
-from matplotlib import pyplot
 from tensorflow.keras.utils import multi_gpu_model
 from tensorflow.python.client import device_lib
 
@@ -193,13 +184,16 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 
+
+
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.GRU(300, 
-                                          return_sequences=True,
-                                          input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.ReLU())
-multi_step_model.add(tf.keras.layers.Dense(300))
-multi_step_model.add(tf.keras.layers.LeakyReLU())
+# multi_step_model.add(tf.keras.layers.Conv1D(filters=20, kernel_size=4, strides=2, padding="valid", input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.GRU(200, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+# multi_step_model.add(tf.keras.layers.GRU(100, return_sequences=True))
+multi_step_model.add(tf.keras.layers.GRU(00, return_sequences=True))
+# multi_step_model.add(tf.keras.layers.ReLU())
+# multi_step_model.add(tf.keras.layers.Dense(300))
+# multi_step_model.add(tf.keras.layers.LeakyReLU())
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 
