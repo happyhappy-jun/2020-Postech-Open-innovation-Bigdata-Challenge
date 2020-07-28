@@ -1,4 +1,5 @@
 
+
 import tensorflow as tf
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -13,7 +14,7 @@ mpl.rcParams['axes.grid'] = False
 
 # %%
 tf.random.set_seed(10)
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 BUFFER_SIZE = 10000
 EPOCH = 1000
 DROPOUT = 0.2
@@ -41,7 +42,7 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("data/datefrom1st.csv")
+raw_df = pd.read_csv("../../data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
@@ -51,18 +52,21 @@ df = df.drop(
 df["difference"] = df.astype('int32')
 df.loc[df["solar_radiation"]<0 , "solar_radiation"] = 0
 df.loc[df["solar_intensity"]<0 , "solar_intensity"] = 0
+df = df.fillna(0)
+scaler = MinMaxScaler().fit(df)
 
-final_test = df.loc["2020-05-31 00:00:00":"2020-05-31 23:45:00"]
+final_test_6 = df.loc["2020-06-24 00:00:00":]
+final_test_5 = df.loc["2020-05-31 00:00:00":"2020-05-31 23:45:00"]
+final_test_3 = df.loc["2020-03-31 00:00:00":"2020-03-31 23:45:00"]
+final_test_1 = df.loc["2020-01-31 00:00:00":"2020-01-31 23:45:00"]
 df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
-df = df.fillna(0)
-
+df = df[:"2020-05-31 00:00:00"]
 
 # %%
 
 TRAIN_SPLIT = int(len(df.index) * 0.8)
-scaler = MinMaxScaler().fit(df)
 values = df.values
 
 
@@ -73,84 +77,11 @@ test = values[TRAIN_SPLIT:, :]
 # split into input and outputs
 train_X, train_y = xy_split(train, scaler)
 test_X, test_y = xy_split(test, scaler)
-final_test_X, final_test_y = xy_split(final_test, scaler)
+final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
+final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
+final_test_X_5, final_test_y_5 = xy_split(final_test_5, scaler)
+final_test_X_6, final_test_y_6 = xy_split(final_test_6, scaler)
 
-# %%x
-def plot_train_history(history, title):
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
-
-    epochs = range(len(loss))
-
-    plt.figure()
-
-    plt.plot(epochs, loss, 'b', label='Training loss')
-    plt.plot(epochs, val_loss, 'r', label='Validation loss')
-    plt.title(title)
-    plt.legend()
-
-    plt.show()
-
-
-# %%
-
-def show_plot(plot_data, delta, title):
-    labels = ['History', 'True Future', 'Model Prediction']
-    marker = ['.-', 'rx', 'go']
-    time_steps = create_time_steps(plot_data[0].shape[0])
-    if delta:
-        future = delta
-    else:
-        future = 0
-
-    plt.title(title)
-    for i, x in enumerate(plot_data):
-        if i:
-            plt.plot(future, plot_data[i], marker[i], markersize=10,
-                     label=labels[i])
-        else:
-            plt.plot(time_steps, plot_data[i].flatten(), marker[i], label=labels[i])
-    plt.legend()
-    plt.xlim([time_steps[0], (future + 5) * 2])
-    plt.xlabel('Time-Step')
-    return plt
-
-
-def create_time_steps(length):
-    return list(range(-length, 0))
-
-
-# %%
-
-def multi_step_plot(history, true_future, prediction):
-    plt.figure(figsize=(12, 6))
-    num_in = create_time_steps(len(history))
-    num_out = len(true_future)
-
-    plt.plot(num_in, np.array(history[:, 1]), label='History')
-    plt.plot(np.arange(num_out) / STEP, np.array(true_future), 'bo',
-             label='True Future')
-    if prediction.any():
-        plt.plot(np.arange(num_out) / STEP, np.array(prediction), 'ro',
-                 label='Predicted Future')
-    plt.legend(loc='upper left')
-    plt.show()
-    plt.savefig("output.png")
-
-
-# %%
-
-def fit_by_batch(X, y, batch_size):
-    n_batches_for_epoch = X.shape[0]//batch_size
-    for i in range(n_batches_for_epoch):
-        index_batch = range(X.shape[0])[batch_size*i:batch_size*(i+1)]
-        X_batch =X[index_batch][0].toarray()[0] #from sparse to array
-        X_batch=X_batch.reshape(1,X_batch.shape[0],1 ) # to 3d array
-        y_batch = y[index_batch,][0]
-        yield(np.array(X_batch),y_batch)
-
-
-print(train_X.shape)
 import tensorflow as tf
 
 # %%
@@ -185,8 +116,10 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.GRU(300, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.GRU(300, return_sequences=True))
+multi_step_model.add(tf.keras.layers.GRU(600, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.Dropout(0.5))
+multi_step_model.add(tf.keras.layers.GRU(600, return_sequences=True))
+multi_step_model.add(tf.keras.layers.Dropout(0.5))
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 
@@ -223,6 +156,8 @@ def make_prediction(model, X, y, plot_name):
     inv_yhat = concatenate((yhat, X_revert), axis = 1)
     inv_xyhat = scaler.inverse_transform(inv_yhat)
     inv_yhat = inv_xyhat[:, 0]
+    print(inv_yhat)
+    np.savetxt(plot_name+".csv", inv_yhat, delimiter= ",")
     y_revert = y.reshape((len(y), 1))
     inv_y1 = concatenate((y_revert, X_revert), axis = 1)
     print("after concate: {}".format(inv_y1.shape))
@@ -237,6 +172,9 @@ def make_prediction(model, X, y, plot_name):
     plt.plot(inv_y, 'b', label = 'true')
     plt.plot(inv_yhat, 'g', label = 'pred')
     plt.legend()
-    plt.savefig(plot_name)
+    plt.savefig(plot_name+".png")
 
-make_prediction(multi_step_model, final_test_X, final_test_y, "final_test.png")
+make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
+make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
+make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_test_5")
+make_prediction(multi_step_model, final_test_X_6, final_test_y_6, "final_test_6")
