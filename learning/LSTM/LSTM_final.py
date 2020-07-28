@@ -41,12 +41,12 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("../../data/datefrom1st.csv")
+raw_df = pd.read_csv("data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
 df = df.drop(
-    [ 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
+    [ "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
 
