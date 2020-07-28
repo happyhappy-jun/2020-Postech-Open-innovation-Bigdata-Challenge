@@ -46,7 +46,7 @@ raw_df.index = raw_df.datetime
 
 df = raw_df
 df = df.drop(
-    ["Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
+    [ 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
 
@@ -54,7 +54,6 @@ df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:0
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
 df = df.fillna(0)
-ult = df.loc["2020-01-24 00:00:00":"2020-01-31 00:00:00"]
 final_test = df.loc["2020-05-24 00:00:00":"2020-05-31 00:00:00"]
 df = df.loc[:"2020-05-24 00:00:00"]
 
