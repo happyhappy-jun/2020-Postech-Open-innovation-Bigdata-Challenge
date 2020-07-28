@@ -41,7 +41,7 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("../../data/datefrom1st.csv")
+raw_df = pd.read_csv("data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
@@ -49,24 +49,25 @@ df = df.drop(
     [ "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
 df["difference"] = df.astype('int32')
+df.loc[df["solar_radiation"]<0 , "solar_radiation"] = 0
+df.loc[df["solar_intensity"]<0 , "solar_intensity"] = 0
 
-final_test = df.loc["2020-05-31 00:00:00":"2020-06-01 00:00:00"]
+final_test = df.loc["2020-05-31 00:00:00":"2020-05-31 23:45:00"]
 df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
 df = df.fillna(0)
-df = df.loc[:"2020-05-31 00:00:00"]
+
 
 # %%
 
-TEST_SPLIT = int(len(df.index) * 0.2)
+TRAIN_SPLIT = int(len(df.index) * 0.8)
 scaler = MinMaxScaler().fit(df)
-values = scaler.transform(df)
+values = df.values
 
 
-
-test = values[:TEST_SPLIT, :]
-train = values[TEST_SPLIT:, :]
+train = values[:TRAIN_SPLIT, :]
+test = values[TRAIN_SPLIT:, :]
 
 
 # split into input and outputs
@@ -184,10 +185,8 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.GRU(600, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.Dropout(0.5))
-multi_step_model.add(tf.keras.layers.GRU(600, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.Dropout(0.5))
+multi_step_model.add(tf.keras.layers.GRU(300, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.GRU(300, return_sequences=True))
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 
@@ -206,7 +205,7 @@ else:
 multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
 history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
-                               verbose=2, callbacks=callbacks)
+                               verbose=2, shuffle=True, callbacks=callbacks)
 
 try:
     multi_step_model.load_weights(path_checkpoint)
@@ -224,19 +223,18 @@ def make_prediction(model, X, y, plot_name):
     inv_yhat = concatenate((yhat, X_revert), axis = 1)
     inv_xyhat = scaler.inverse_transform(inv_yhat)
     inv_yhat = inv_xyhat[:, 0]
-    print(inv_yhat)
-    #iy_revert = y.reshape((len(y), 1))
-    #inv_y1 = concatenate((y_revert, X_revert), axis = 1)
-    #print("after concate: {}".format(inv_y1.shape))
-    #inv_y1 = scaler.inverse_transform(inv_y1)
-    #inv_y = inv_y1[:, 0]
-    #rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
-    #print('Test RMSE: %.6f' % rmse)
-    #print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
+    y_revert = y.reshape((len(y), 1))
+    inv_y1 = concatenate((y_revert, X_revert), axis = 1)
+    print("after concate: {}".format(inv_y1.shape))
+    inv_y1 = scaler.inverse_transform(inv_y1)
+    inv_y = inv_y1[:, 0]
+    rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
+    print('Test RMSE: %.6f' % rmse)
+    print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
 
 
     fig = plt.figure(figsize=(20,6))
-    #plt.plot(inv_y, 'b', label = 'true')
+    plt.plot(inv_y, 'b', label = 'true')
     plt.plot(inv_yhat, 'g', label = 'pred')
     plt.legend()
     plt.savefig(plot_name)
