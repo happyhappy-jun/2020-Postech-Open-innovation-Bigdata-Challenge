@@ -42,23 +42,23 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("../../data/datefrom1st.csv")
+raw_df = pd.read_csv("data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
 df = df.drop(
     [ "Unnamed: 0", 'datetime', 'percipitation', 'air_pressure', 'sea_level_pressure',
      'wind_degree'], axis=1)
-df["difference"] = df.astype('int32')
+df["difference"] = df["difference"].astype('int32')
 df.loc[df["solar_radiation"]<0 , "solar_radiation"] = 0
 df.loc[df["solar_intensity"]<0 , "solar_intensity"] = 0
 df = df.fillna(0)
 scaler = MinMaxScaler().fit(df)
 
-final_test_6 = df.loc["2020-06-24 00:00:00":]
+# final_test_6 = df.loc["2020-06-24 00:00:00":]
 final_test_5 = df.loc["2020-05-31 00:00:00":"2020-05-31 23:45:00"]
-final_test_3 = df.loc["2020-03-31 00:00:00":"2020-03-31 23:45:00"]
-final_test_1 = df.loc["2020-01-31 00:00:00":"2020-01-31 23:45:00"]
+# final_test_3 = df.loc["2020-03-31 00:00:00":"2020-03-31 23:45:00"]
+# final_test_1 = df.loc["2020-01-31 00:00:00":"2020-01-31 23:45:00"]
 df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
@@ -77,10 +77,10 @@ test = values[TRAIN_SPLIT:, :]
 # split into input and outputs
 train_X, train_y = xy_split(train, scaler)
 test_X, test_y = xy_split(test, scaler)
-final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
-final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
+# final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
+# final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
 final_test_X_5, final_test_y_5 = xy_split(final_test_5, scaler)
-final_test_X_6, final_test_y_6 = xy_split(final_test_6, scaler)
+# final_test_X_6, final_test_y_6 = xy_split(final_test_6, scaler)
 
 import tensorflow as tf
 
@@ -174,7 +174,7 @@ def make_prediction(model, X, y, plot_name):
     plt.legend()
     plt.savefig(plot_name+".png")
 
-make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
-make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
+# make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
+# make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
 make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_test_5")
-make_prediction(multi_step_model, final_test_X_6, final_test_y_6, "final_test_6")
+# make_prediction(multi_step_model, final_test_X_6, final_test_y_6, "final_test_6")
