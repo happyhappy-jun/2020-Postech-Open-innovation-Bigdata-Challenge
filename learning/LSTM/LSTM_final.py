@@ -42,7 +42,7 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("data/datefrom1st.csv")
+raw_df = pd.read_csv("../../data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
@@ -55,14 +55,12 @@ df.loc[df["solar_intensity"]<0 , "solar_intensity"] = 0
 df = df.fillna(0)
 scaler = MinMaxScaler().fit(df)
 
-# final_test_6 = df.loc["2020-06-24 00:00:00":]
 final_test_5 = df.loc["2020-05-31 00:00:00":"2020-05-31 23:45:00"]
-# final_test_3 = df.loc["2020-03-31 00:00:00":"2020-03-31 23:45:00"]
-# final_test_1 = df.loc["2020-01-31 00:00:00":"2020-01-31 23:45:00"]
+final_test_3 = df.loc["2020-03-31 00:00:00":"2020-03-31 23:45:00"]
+final_test_1 = df.loc["2020-01-31 00:00:00":"2020-01-31 23:45:00"]
 df.drop(df.loc[(df.index > '2020-01-31 00:00:00') & (df.index < '2020-02-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-03-31 00:00:00') & (df.index < '2020-04-01 00:00:00')].index, inplace=True)
 df.drop(df.loc[(df.index > '2020-05-31 00:00:00') & (df.index < '2020-06-01 00:00:00')].index, inplace=True)
-df = df[:"2020-05-31 00:00:00"]
 
 # %%
 
@@ -77,8 +75,8 @@ test = values[TRAIN_SPLIT:, :]
 # split into input and outputs
 train_X, train_y = xy_split(train, scaler)
 test_X, test_y = xy_split(test, scaler)
-# final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
-# final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
+final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
+final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
 final_test_X_5, final_test_y_5 = xy_split(final_test_5, scaler)
 # final_test_X_6, final_test_y_6 = xy_split(final_test_6, scaler)
 
@@ -116,10 +114,9 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.GRU(600, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.Dropout(0.5))
-multi_step_model.add(tf.keras.layers.GRU(600, return_sequences=True))
-multi_step_model.add(tf.keras.layers.Dropout(0.5))
+multi_step_model.add(tf.keras.layers.LSTM(1000,activation="relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.LSTM(1000, activation="relu", return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(1000, activation="relu", return_sequences=True))
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 
@@ -156,7 +153,6 @@ def make_prediction(model, X, y, plot_name):
     inv_yhat = concatenate((yhat, X_revert), axis = 1)
     inv_xyhat = scaler.inverse_transform(inv_yhat)
     inv_yhat = inv_xyhat[:, 0]
-    print(inv_yhat)
     np.savetxt(plot_name+".csv", inv_yhat, delimiter= ",")
     y_revert = y.reshape((len(y), 1))
     inv_y1 = concatenate((y_revert, X_revert), axis = 1)
@@ -174,7 +170,7 @@ def make_prediction(model, X, y, plot_name):
     plt.legend()
     plt.savefig(plot_name+".png")
 
-# make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
-# make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
+make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
+make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
 make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_test_5")
 # make_prediction(multi_step_model, final_test_X_6, final_test_y_6, "final_test_6")
