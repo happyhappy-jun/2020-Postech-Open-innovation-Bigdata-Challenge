@@ -187,13 +187,8 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 multi_step_model = tf.keras.models.Sequential()
-# multi_step_model.add(tf.keras.layers.Conv1D(filters=20, kernel_size=4, strides=2, padding="valid", input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.GRU(200, return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-# multi_step_model.add(tf.keras.layers.GRU(100, return_sequences=True))
-multi_step_model.add(tf.keras.layers.GRU(00, return_sequences=True))
-# multi_step_model.add(tf.keras.layers.ReLU())
-# multi_step_model.add(tf.keras.layers.Dense(300))
-# multi_step_model.add(tf.keras.layers.LeakyReLU())
+multi_step_model.add(tf.keras.layers.GRU(350, activation="relu",  return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.GRU(350, activation="relu", return_sequences=True))
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 
@@ -209,7 +204,7 @@ else:
     print(f"[+] {get_gpu_num()} GPUs found! Setting to GPU model...")
     multi_step_model = multi_gpu_model(multi_step_model, gpus=get_gpu_num())
 
-multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
+multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(lr=0.001), loss='mse')
 
 history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
                                verbose=2, shuffle=True, callbacks=callbacks)
