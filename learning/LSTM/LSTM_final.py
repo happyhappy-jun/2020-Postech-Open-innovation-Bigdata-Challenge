@@ -12,6 +12,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, ReduceL
 mpl.rcParams['figure.figsize'] = (8, 6)
 mpl.rcParams['axes.grid'] = False
 
+
 # %%
 tf.random.set_seed(10)
 BATCH_SIZE = 64
@@ -42,7 +43,7 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("../../data/datefrom1st.csv")
+raw_df = pd.read_csv("data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
@@ -80,7 +81,6 @@ final_test_X, final_test_y = xy_split(final_test, scaler)
 final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
 final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
 final_test_X_5, final_test_y_5 = xy_split(final_test_5, scaler)
-# final_test_X_6, final_test_y_6 = xy_split(final_test_6, scaler)
 
 import tensorflow as tf
 
@@ -132,71 +132,110 @@ def build_model(hp):
     return multi_step_model
 
 
-tuner = RandomSearch(
-    build_model,
-    objective='val_loss',
-    max_trials=5,
-    executions_per_trial=1,
-    directory='H-tuning')
-
-print(tuner.search_space_summary())
-tuner.search(train_X, train_y,epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
-                               verbose=2, shuffle=True, callbacks=callbacks)
-print(tuner.results_summary())
-
-
-
-
-# print(f"[+] Available GPUs")
-# print(get_available_gpus())
-#
-# if get_gpu_num() < 2:
-#     print(f"[+] Available multiple GPU not found... Just use CPU! XD")
-# else:
-#     print(f"[+] {get_gpu_num()} GPUs found! Setting to GPU model...")
-#     multi_step_model = multi_gpu_model(multi_step_model, gpus=get_gpu_num())
-#
-# multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
-
-# history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
+# tuner = RandomSearch(
+#     build_model,
+#     objective='val_loss',
+#     max_trials=5,
+#     executions_per_trial=1,
+#     directory='H-tuning')
+# 
+# print(tuner.search_space_summary())
+# tuner.search(train_X, train_y,epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
 #                                verbose=2, shuffle=True, callbacks=callbacks)
-#
-# try:
-#     multi_step_model.load_weights(path_checkpoint)
-# except Exception as error:
-#     print("Error trying to load checkpoint.")
-#
-# from numpy import concatenate
-# from math import sqrt
-# from sklearn.metrics import mean_squared_error
-#
-#
-# def make_prediction(model, X, y, plot_name):
-#     yhat = model.predict(X)[:, :, 0]
-#     X_revert = X.reshape((X.shape[0], X.shape[2]))
-#     inv_yhat = concatenate((yhat, X_revert), axis = 1)
-#     inv_xyhat = scaler.inverse_transform(inv_yhat)
-#     inv_yhat = inv_xyhat[:, 0]
-#     np.savetxt(plot_name+".csv", inv_yhat, delimiter= ",")
-#     y_revert = y.reshape((len(y), 1))
-#     inv_y1 = concatenate((y_revert, X_revert), axis = 1)
-#     print("after concate: {}".format(inv_y1.shape))
-#     inv_y1 = scaler.inverse_transform(inv_y1)
-#     inv_y = inv_y1[:, 0]
-#     rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
-#     print('Test RMSE: %.6f' % rmse)
-#     print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
-#
-#
-#     fig = plt.figure(figsize=(20,6))
-#     plt.plot(inv_y, 'b', label = 'true')
-#     plt.plot(inv_yhat, 'g', label = 'pred')
-#     plt.legend()
-#     plt.savefig(plot_name+".png")
-#
-# make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
-# make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
-#
-# make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_test_5")
-# make_prediction(multi_step_model, final_test_X, final_test_y, "final_test")
-# print(multi_step_model.summary())
+# print(tuner.results_summary())
+
+
+
+
+print(f"[+] Available GPUs")
+print(get_available_gpus())
+
+if get_gpu_num() < 2:
+    print(f"[+] Available multiple GPU not found... Just use CPU! XD")
+else:
+    print(f"[+] {get_gpu_num()} GPUs found! Setting to GPU model...")
+    multi_step_model = multi_gpu_model(multi_step_model, gpus=get_gpu_num())
+
+multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
+
+history = multi_step_model.fit(train_X, train_y, epochs=EPOCH, batch_size=BATCH_SIZE, validation_data=(test_X, test_y),
+                               verbose=2, shuffle=True, callbacks=callbacks)
+
+try:
+    multi_step_model.load_weights(path_checkpoint)
+except Exception as error:
+    print("Error trying to load checkpoint.")
+
+from numpy import concatenate
+from math import sqrt
+from sklearn.metrics import mean_squared_error
+
+
+def make_prediction(model, X, y, plot_name):
+    yhat = model.predict(X)[:, :, 0]
+    X_revert = X.reshape((X.shape[0], X.shape[2]))
+    inv_yhat = concatenate((yhat, X_revert), axis = 1)
+    inv_xyhat = scaler.inverse_transform(inv_yhat)
+    inv_yhat = inv_xyhat[:, 0]
+    np.savetxt(plot_name+".csv", inv_yhat, delimiter= ",")
+    y_revert = y.reshape((len(y), 1))
+    inv_y1 = concatenate((y_revert, X_revert), axis = 1)
+    print("after concate: {}".format(inv_y1.shape))
+    inv_y1 = scaler.inverse_transform(inv_y1)
+    inv_y = inv_y1[:, 0]
+    rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
+    print('Test RMSE: %.6f' % rmse)
+    print('Test MAE: %.6f' % mean_squared_error(inv_y, inv_yhat))
+
+
+    fig = plt.figure(figsize=(20,6))
+    plt.plot(inv_y, 'b', label = 'true')
+    plt.plot(inv_yhat, 'g', label = 'pred')
+    plt.legend()
+    plt.savefig(plot_name+".png")
+
+make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_1")
+make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_3")
+make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_5")
+print(multi_step_model.summary())
+
+
+# %%
+#2017 8 3
+y = 17
+date =3
+idx = 3
+base = pd.read_csv("../../data/future/SURFACE_ASOS_131_MI_2017-08_2017-08_2017.csv", encoding='euc-kr').fillna(0)
+base.columns
+
+base = base[['일시', '기온(°C)','풍속(m/s)', '습도(%)','일사(MJ/m^2)','일조(Sec)']]
+base = base.rename(columns={'일시':'datetime', '기온(°C)':"temperature",'풍속(m/s)':"wind_speed", '습도(%)':"humidity",
+                            "일조(Sec)":"solar_radiation",'일사(MJ/m^2)':"solar_intensity"
+})
+base.datetime = pd.to_datetime(base.datetime, infer_datetime_format=True)
+base["difference"] = base["datetime"].sub(pd.to_datetime("2017-01-01", infer_datetime_format=True), axis=0)/ np.timedelta64(1, 'D')
+
+base = base.set_index('datetime')
+base = base[f"20{y}-08-0{date} 00:00":f"20{y}-08-0{date} 23:59"]
+
+
+
+
+#%%
+out = pd.DataFrame()
+period_min = 15
+out["result"] = 0
+out["temperature"] = base["temperature"].resample(f'{str(period_min)}T').mean()
+out["wind_speed"] = base["wind_speed"] .resample(f'{str(period_min)}T').mean()
+out["humidity"]= base["humidity"].resample(f'{str(period_min)}T').mean()
+out["solar_intensity"] = base["solar_intensity"].resample(f'{str(period_min)}T').mean().diff()
+out["solar_radiation"] = base["solar_radiation"].resample(f'{str(period_min)}T').mean().diff()
+out["date"] = 31
+out["month"] = 7
+out["hour"] = pd.DatetimeIndex(out.index).hour
+out["difference"] = base["difference"]
+out.loc[out["solar_intensity"] < 0 , "solar_intensity"] = 0
+out.loc[out["solar_radiation"] < 0 , "solar_radiation"] = 0
+out = out.fillna(0)
+out_X, out_y = xy_split(out, scaler)
+make_prediction(multi_step_model, out_X, out_y, "final_7")

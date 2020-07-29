@@ -14,7 +14,7 @@ mpl.rcParams['axes.grid'] = False
 tf.random.set_seed(10)
 BATCH_SIZE = 32
 BUFFER_SIZE = 10000
-EPOCH = 1000
+EPOCH = 5
 
 # %%
 past_history = 4 * 24 * 10
@@ -255,3 +255,43 @@ def make_prediction(model, X, y, plot_name):
 
 print(final_test_X.shape)
 make_prediction(multi_step_model, final_test_X, final_test_y, "final_test.png")
+
+# %%
+#2017 8 3
+y = 17
+date =3
+idx = 3
+base = pd.read_csv("../../data/future/SURFACE_ASOS_131_MI_2017-08_2017-08_2017.csv", encoding='euc-kr').fillna(0)
+base.columns
+
+base = base[['일시', '기온(°C)','풍속(m/s)', '습도(%)','일사(MJ/m^2)','일조(Sec)']]
+base = base.rename(columns={'일시':'datetime', '기온(°C)':"temperature",'풍속(m/s)':"wind_speed", '습도(%)':"humidity",
+                            "일조(Sec)":"solar_radiation",'일사(MJ/m^2)':"solar_intensity"
+})
+base.datetime = pd.to_datetime(base.datetime, infer_datetime_format=True)
+base["difference"] = base["datetime"].sub(pd.to_datetime("2017-01-01", infer_datetime_format=True), axis=0)/ np.timedelta64(1, 'D')
+
+base = base.set_index('datetime')
+base = base[f"20{y}-08-0{date} 00:00":f"20{y}-08-0{date} 23:59"]
+
+
+
+
+#%%
+out = pd.DataFrame()
+period_min = 15
+out["result"] = 0
+out["temperature"] = base["temperature"].resample(f'{str(period_min)}T').mean()
+out["wind_speed"] = base["wind_speed"] .resample(f'{str(period_min)}T').mean()
+out["humidity"]= base["humidity"].resample(f'{str(period_min)}T').mean()
+out["solar_intensity"] = base["solar_intensity"].resample(f'{str(period_min)}T').mean().diff()
+out["solar_radiation"] = base["solar_radiation"].resample(f'{str(period_min)}T').mean().diff()
+out["date"] = 31
+out["month"] = 7
+out["hour"] = pd.DatetimeIndex(out.index).hour
+out["difference"] = base["difference"]
+out.loc[out["solar_intensity"] < 0 , "solar_intensity"] = 0
+out.loc[out["solar_radiation"] < 0 , "solar_radiation"] = 0
+out = out.fillna(0)
+out_X, out_y = xy_split(out, scaler)
+make_prediction(multi_step_model, out_X, out_y, "final_test.png")
