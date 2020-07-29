@@ -116,12 +116,14 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(600, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.Dropout(0.3))
-multi_step_model.add(tf.keras.layers.LSTM(600, activation = "relu",  return_sequences=True))
-multi_step_model.add(tf.keras.layers.Dropout(0.3))
-multi_step_model.add(tf.keras.layers.LSTM(600, activation = "relu", return_sequences=True))
-multi_step_model.add(tf.keras.layers.Dropout(0.3))
+
+multi_step_model.add(tf.keras.layers.GRU(300, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.GRU(300, activation = "relu",  return_sequences=True))
+
+#multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+#multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu",  return_sequences=True))
+#multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu",  return_sequences=True))
+#multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu",  return_sequences=True))
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 

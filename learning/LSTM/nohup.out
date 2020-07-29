@@ -1687,3 +1687,1451 @@ after concate: (96, 7)
 (96,)
 Test RMSE: 4.568052
 Test MAE: 20.867097
+2020-07-29 15:08:28.060499: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-07-29 15:08:28.117243: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:08:28.118118: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:08:28.120350: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:08:28.125623: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:08:28.139021: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:08:28.143415: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:08:28.146535: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:08:28.150531: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:08:28.153688: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:08:28.154033: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-07-29 15:08:28.160948: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3597960000 Hz
+2020-07-29 15:08:28.161681: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x67f5650 executing computations on platform Host. Devices:
+2020-07-29 15:08:28.161700: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-07-29 15:08:28.277086: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x6810fa0 executing computations on platform CUDA. Devices:
+2020-07-29 15:08:28.277137: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): TITAN Xp, Compute Capability 6.1
+2020-07-29 15:08:28.280431: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:08:28.280507: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:08:28.280542: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:08:28.280573: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:08:28.280603: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:08:28.280634: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:08:28.280665: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:08:28.280696: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:08:28.286620: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:08:28.286693: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:08:28.288800: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:08:28.288816: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:08:28.288823: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:08:28.291596: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:08:29.147547: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:08:29.147601: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:08:29.147615: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:08:29.147627: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:08:29.147639: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:08:29.147650: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:08:29.147661: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:08:29.147673: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:08:29.149566: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:08:29.149588: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:08:29.149594: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:08:29.149599: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:08:29.151588: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:08:29.153055: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:08:29.153080: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:08:29.153093: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:08:29.153104: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:08:29.153116: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:08:29.153127: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:08:29.153138: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:08:29.153150: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:08:29.155016: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:08:29.155032: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:08:29.155038: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:08:29.155042: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:08:29.157008: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+Using TensorFlow backend.
+WARNING:tensorflow:Entity <function Function._initialize_uninitialized_variables.<locals>.initialize_variables at 0x7f5e7c2d8e18> could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module 'gast' has no attribute 'Num'
+2020-07-29 15:08:31.360802: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:08:31.551341: I tensorflow/core/profiler/lib/profiler_session.cc:184] Profiler session started.
+2020-07-29 15:08:31.551532: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcupti.so.10.0'; dlerror: libcupti.so.10.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ohpc/pub/apps/cuDNN/cuda-10.0/cudnn-7.6.4.38/lib64:/usr/lib64/nvidia:/opt/ohpc/pub/apps/cuda-10.0/targets/x86_64-linux/lib:/opt/ohpc/pub/apps/cuda-10.0/lib64:/opt/ohpc/pub/apps/python3/3.6.9/lib:/opt/ohpc/pub/mpi/openmpi-gnu7/1.10.7/lib:/opt/ohpc/pub/compiler/gcc/7.3.0/lib64
+2020-07-29 15:08:31.551549: W tensorflow/core/profiler/lib/profiler_session.cc:192] Encountered error while starting profiler: Unavailable: CUPTI error: CUPTI could not be loaded or symbol could not be found.
+2020-07-29 15:08:31.594595: I tensorflow/core/platform/default/device_tracer.cc:588] Collecting 0 kernel records, 0 memcpy records.
+2020-07-29 15:08:31.594755: E tensorflow/core/platform/default/device_tracer.cc:70] CUPTI error: CUPTI could not be loaded or symbol could not be found.
+[+] Available GPUs
+['/device:GPU:0']
+[+] Available multiple GPU not found... Just use CPU! XD
+Train on 27881 samples, validate on 6971 samples
+Epoch 1/1000
+
+Epoch 00001: val_loss improved from inf to 0.00353, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0067 - val_loss: 0.0035
+Epoch 2/1000
+
+Epoch 00002: val_loss did not improve from 0.00353
+27881/27881 - 3s - loss: 0.0039 - val_loss: 0.0036
+Epoch 3/1000
+
+Epoch 00003: val_loss improved from 0.00353 to 0.00339, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0037 - val_loss: 0.0034
+Epoch 4/1000
+
+Epoch 00004: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0036 - val_loss: 0.0043
+Epoch 5/1000
+
+Epoch 00005: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0035 - val_loss: 0.0034
+Epoch 6/1000
+
+Epoch 00006: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0034 - val_loss: 0.0040
+Epoch 7/1000
+
+Epoch 00007: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0034 - val_loss: 0.0034
+Epoch 8/1000
+
+Epoch 00008: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0033 - val_loss: 0.0034
+Epoch 9/1000
+
+Epoch 00009: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0033 - val_loss: 0.0035
+Epoch 10/1000
+
+Epoch 00010: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0032 - val_loss: 0.0035
+Epoch 11/1000
+
+Epoch 00011: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0032 - val_loss: 0.0034
+Epoch 12/1000
+
+Epoch 00012: val_loss did not improve from 0.00339
+27881/27881 - 3s - loss: 0.0032 - val_loss: 0.0035
+Epoch 13/1000
+
+Epoch 00013: val_loss improved from 0.00339 to 0.00331, saving model to ../23_checkpoint.keras
+
+Epoch 00013: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+27881/27881 - 3s - loss: 0.0031 - val_loss: 0.0033
+Epoch 14/1000
+
+Epoch 00014: val_loss did not improve from 0.00331
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0035
+Epoch 15/1000
+
+Epoch 00015: val_loss did not improve from 0.00331
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0036
+Epoch 16/1000
+
+Epoch 00016: val_loss improved from 0.00331 to 0.00322, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0032
+Epoch 17/1000
+
+Epoch 00017: val_loss did not improve from 0.00322
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0033
+Epoch 18/1000
+
+Epoch 00018: val_loss did not improve from 0.00322
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0032
+Epoch 19/1000
+
+Epoch 00019: val_loss did not improve from 0.00322
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0032
+Epoch 20/1000
+
+Epoch 00020: val_loss improved from 0.00322 to 0.00319, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0032
+Epoch 21/1000
+
+Epoch 00021: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0032
+Epoch 22/1000
+
+Epoch 00022: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0034
+Epoch 23/1000
+
+Epoch 00023: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0033
+Epoch 24/1000
+
+Epoch 00024: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0035
+Epoch 25/1000
+
+Epoch 00025: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0034
+Epoch 26/1000
+
+Epoch 00026: val_loss did not improve from 0.00319
+
+Epoch 00026: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0033
+Epoch 27/1000
+
+Epoch 00027: val_loss improved from 0.00319 to 0.00314, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0031
+Epoch 28/1000
+
+Epoch 00028: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0036
+Epoch 29/1000
+
+Epoch 00029: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0033
+Epoch 30/1000
+
+Epoch 00030: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0034
+Epoch 31/1000
+
+Epoch 00031: val_loss improved from 0.00314 to 0.00314, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0031
+Epoch 32/1000
+
+Epoch 00032: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0035
+Epoch 33/1000
+
+Epoch 00033: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0035
+Epoch 34/1000
+
+Epoch 00034: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0035
+Epoch 35/1000
+
+Epoch 00035: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0033
+Epoch 36/1000
+
+Epoch 00036: val_loss did not improve from 0.00314
+
+Epoch 00036: ReduceLROnPlateau reducing learning rate to 0.0001250000059371814.
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0033
+Epoch 37/1000
+
+Epoch 00037: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0032
+Epoch 38/1000
+
+Epoch 00038: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0033
+Epoch 39/1000
+
+Epoch 00039: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0032
+Epoch 40/1000
+
+Epoch 00040: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0034
+Epoch 41/1000
+
+Epoch 00041: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0032
+Epoch 42/1000
+
+Epoch 00042: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0034
+Epoch 43/1000
+
+Epoch 00043: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0032
+Epoch 44/1000
+
+Epoch 00044: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0034
+Epoch 45/1000
+
+Epoch 00045: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 46/1000
+
+Epoch 00046: val_loss did not improve from 0.00314
+
+Epoch 00046: ReduceLROnPlateau reducing learning rate to 6.25000029685907e-05.
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0036
+Epoch 47/1000
+
+Epoch 00047: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 48/1000
+
+Epoch 00048: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 49/1000
+
+Epoch 00049: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0034
+Epoch 50/1000
+
+Epoch 00050: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 51/1000
+
+Epoch 00051: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0032
+Epoch 52/1000
+
+Epoch 00052: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 53/1000
+
+Epoch 00053: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0032
+Epoch 54/1000
+
+Epoch 00054: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0035
+Epoch 55/1000
+
+Epoch 00055: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0034
+Epoch 56/1000
+
+Epoch 00056: val_loss did not improve from 0.00314
+
+Epoch 00056: ReduceLROnPlateau reducing learning rate to 3.125000148429535e-05.
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 57/1000
+
+Epoch 00057: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0032
+Epoch 58/1000
+
+Epoch 00058: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 59/1000
+
+Epoch 00059: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 60/1000
+
+Epoch 00060: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 61/1000
+
+Epoch 00061: val_loss did not improve from 0.00314
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 00061: early stopping
+after concate: (96, 10)
+Test RMSE: 5.293952
+Test MAE: 28.025928
+after concate: (96, 10)
+Test RMSE: 12.039143
+Test MAE: 144.940973
+after concate: (96, 10)
+Test RMSE: 9.896896
+Test MAE: 97.948547
+after concate: (673, 10)
+Test RMSE: 2.416039
+Test MAE: 5.837246
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+gru (GRU)                    (None, 1, 400)            493200    
+_________________________________________________________________
+dropout (Dropout)            (None, 1, 400)            0         
+_________________________________________________________________
+gru_1 (GRU)                  (None, 1, 400)            962400    
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 1, 400)            0         
+_________________________________________________________________
+dense (Dense)                (None, 1, 1)              401       
+=================================================================
+Total params: 1,456,001
+Trainable params: 1,456,001
+Non-trainable params: 0
+_________________________________________________________________
+None
+2020-07-29 15:13:12.241133: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-07-29 15:13:12.292056: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:13:12.292984: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:13:12.294694: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:13:12.296239: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:13:12.296981: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:13:12.298901: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:13:12.300559: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:13:12.304374: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:13:12.307447: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:13:12.307784: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-07-29 15:13:12.314546: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3597960000 Hz
+2020-07-29 15:13:12.315146: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x59821b0 executing computations on platform Host. Devices:
+2020-07-29 15:13:12.315165: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-07-29 15:13:12.430054: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x599db00 executing computations on platform CUDA. Devices:
+2020-07-29 15:13:12.430104: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): TITAN Xp, Compute Capability 6.1
+2020-07-29 15:13:12.433409: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:13:12.433483: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:13:12.433519: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:13:12.433549: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:13:12.433579: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:13:12.433609: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:13:12.433640: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:13:12.433671: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:13:12.438116: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:13:12.438150: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:13:12.440054: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:13:12.440069: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:13:12.440075: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:13:12.442808: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:13:13.236332: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:13:13.236385: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:13:13.236410: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:13:13.236423: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:13:13.236434: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:13:13.236446: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:13:13.236461: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:13:13.236474: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:13:13.238343: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:13:13.238366: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:13:13.238372: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:13:13.238376: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:13:13.240319: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:13:13.242845: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:13:13.242913: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:13:13.242947: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:13:13.242977: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:13:13.243006: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:13:13.243035: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:13:13.243064: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:13:13.243093: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:13:13.246905: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:13:13.246923: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:13:13.246930: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:13:13.246935: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:13:13.248972: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+Using TensorFlow backend.
+WARNING:tensorflow:Entity <function Function._initialize_uninitialized_variables.<locals>.initialize_variables at 0x7f50303f2e18> could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module 'gast' has no attribute 'Num'
+2020-07-29 15:13:15.452797: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:13:15.637200: I tensorflow/core/profiler/lib/profiler_session.cc:184] Profiler session started.
+2020-07-29 15:13:15.637529: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcupti.so.10.0'; dlerror: libcupti.so.10.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ohpc/pub/apps/cuDNN/cuda-10.0/cudnn-7.6.4.38/lib64:/usr/lib64/nvidia:/opt/ohpc/pub/apps/cuda-10.0/targets/x86_64-linux/lib:/opt/ohpc/pub/apps/cuda-10.0/lib64:/opt/ohpc/pub/apps/python3/3.6.9/lib:/opt/ohpc/pub/mpi/openmpi-gnu7/1.10.7/lib:/opt/ohpc/pub/compiler/gcc/7.3.0/lib64
+2020-07-29 15:13:15.637572: W tensorflow/core/profiler/lib/profiler_session.cc:192] Encountered error while starting profiler: Unavailable: CUPTI error: CUPTI could not be loaded or symbol could not be found.
+2020-07-29 15:13:15.682960: I tensorflow/core/platform/default/device_tracer.cc:588] Collecting 0 kernel records, 0 memcpy records.
+2020-07-29 15:13:15.683128: E tensorflow/core/platform/default/device_tracer.cc:70] CUPTI error: CUPTI could not be loaded or symbol could not be found.
+[+] Available GPUs
+['/device:GPU:0']
+[+] Available multiple GPU not found... Just use CPU! XD
+Train on 27881 samples, validate on 6971 samples
+Epoch 1/1000
+
+Epoch 00001: val_loss improved from inf to 0.00350, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0069 - val_loss: 0.0035
+Epoch 2/1000
+
+Epoch 00002: val_loss did not improve from 0.00350
+27881/27881 - 3s - loss: 0.0038 - val_loss: 0.0036
+Epoch 3/1000
+
+Epoch 00003: val_loss improved from 0.00350 to 0.00346, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0035 - val_loss: 0.0035
+Epoch 4/1000
+
+Epoch 00004: val_loss did not improve from 0.00346
+27881/27881 - 3s - loss: 0.0034 - val_loss: 0.0038
+Epoch 5/1000
+
+Epoch 00005: val_loss improved from 0.00346 to 0.00333, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0033 - val_loss: 0.0033
+Epoch 6/1000
+
+Epoch 00006: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0033 - val_loss: 0.0035
+Epoch 7/1000
+
+Epoch 00007: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0032 - val_loss: 0.0035
+Epoch 8/1000
+
+Epoch 00008: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0032 - val_loss: 0.0035
+Epoch 9/1000
+
+Epoch 00009: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0031 - val_loss: 0.0035
+Epoch 10/1000
+
+Epoch 00010: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0031 - val_loss: 0.0033
+Epoch 11/1000
+
+Epoch 00011: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0031 - val_loss: 0.0038
+Epoch 12/1000
+
+Epoch 00012: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0030 - val_loss: 0.0035
+Epoch 13/1000
+
+Epoch 00013: val_loss did not improve from 0.00333
+27881/27881 - 3s - loss: 0.0031 - val_loss: 0.0034
+Epoch 14/1000
+
+Epoch 00014: val_loss improved from 0.00333 to 0.00321, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0030 - val_loss: 0.0032
+Epoch 15/1000
+
+Epoch 00015: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0037
+Epoch 16/1000
+
+Epoch 00016: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0034
+Epoch 17/1000
+
+Epoch 00017: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0034
+Epoch 18/1000
+
+Epoch 00018: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0033
+Epoch 19/1000
+
+Epoch 00019: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0041
+Epoch 20/1000
+
+Epoch 00020: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0035
+Epoch 21/1000
+
+Epoch 00021: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0035
+Epoch 22/1000
+
+Epoch 00022: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0035
+Epoch 23/1000
+
+Epoch 00023: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0033
+Epoch 24/1000
+
+Epoch 00024: val_loss did not improve from 0.00321
+
+Epoch 00024: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0035
+Epoch 25/1000
+
+Epoch 00025: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0035
+Epoch 26/1000
+
+Epoch 00026: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0034
+Epoch 27/1000
+
+Epoch 00027: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0032
+Epoch 28/1000
+
+Epoch 00028: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0038
+Epoch 29/1000
+
+Epoch 00029: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0033
+Epoch 30/1000
+
+Epoch 00030: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0034
+Epoch 31/1000
+
+Epoch 00031: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 32/1000
+
+Epoch 00032: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0026 - val_loss: 0.0035
+Epoch 33/1000
+
+Epoch 00033: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 34/1000
+
+Epoch 00034: val_loss did not improve from 0.00321
+
+Epoch 00034: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0037
+Epoch 35/1000
+
+Epoch 00035: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0034
+Epoch 36/1000
+
+Epoch 00036: val_loss did not improve from 0.00321
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0034
+Epoch 37/1000
+
+Epoch 00037: val_loss improved from 0.00321 to 0.00319, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0032
+Epoch 38/1000
+
+Epoch 00038: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 39/1000
+
+Epoch 00039: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0034
+Epoch 40/1000
+
+Epoch 00040: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0034
+Epoch 41/1000
+
+Epoch 00041: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0032
+Epoch 42/1000
+
+Epoch 00042: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0037
+Epoch 43/1000
+
+Epoch 00043: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0032
+Epoch 44/1000
+
+Epoch 00044: val_loss did not improve from 0.00319
+
+Epoch 00044: ReduceLROnPlateau reducing learning rate to 0.0001250000059371814.
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0035
+Epoch 45/1000
+
+Epoch 00045: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 46/1000
+
+Epoch 00046: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0035
+Epoch 47/1000
+
+Epoch 00047: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0035
+Epoch 48/1000
+
+Epoch 00048: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 49/1000
+
+Epoch 00049: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0035
+Epoch 50/1000
+
+Epoch 00050: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 51/1000
+
+Epoch 00051: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 52/1000
+
+Epoch 00052: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 53/1000
+
+Epoch 00053: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0032
+Epoch 54/1000
+
+Epoch 00054: val_loss did not improve from 0.00319
+
+Epoch 00054: ReduceLROnPlateau reducing learning rate to 6.25000029685907e-05.
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0036
+Epoch 55/1000
+
+Epoch 00055: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0035
+Epoch 56/1000
+
+Epoch 00056: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 57/1000
+
+Epoch 00057: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0033
+Epoch 58/1000
+
+Epoch 00058: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0036
+Epoch 59/1000
+
+Epoch 00059: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 60/1000
+
+Epoch 00060: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0035
+Epoch 61/1000
+
+Epoch 00061: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0034
+Epoch 62/1000
+
+Epoch 00062: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0036
+Epoch 63/1000
+
+Epoch 00063: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0033
+Epoch 64/1000
+
+Epoch 00064: val_loss did not improve from 0.00319
+
+Epoch 00064: ReduceLROnPlateau reducing learning rate to 3.125000148429535e-05.
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0034
+Epoch 65/1000
+
+Epoch 00065: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0034
+Epoch 66/1000
+
+Epoch 00066: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0035
+Epoch 67/1000
+
+Epoch 00067: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0022 - val_loss: 0.0035
+Epoch 00067: early stopping
+after concate: (96, 10)
+Test RMSE: 5.410420
+Test MAE: 29.272649
+after concate: (96, 10)
+Test RMSE: 11.896210
+Test MAE: 141.519810
+after concate: (96, 10)
+Test RMSE: 10.054458
+Test MAE: 101.092131
+after concate: (673, 10)
+Test RMSE: 2.415640
+Test MAE: 5.835316
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+gru (GRU)                    (None, 1, 300)            279900    
+_________________________________________________________________
+dropout (Dropout)            (None, 1, 300)            0         
+_________________________________________________________________
+gru_1 (GRU)                  (None, 1, 300)            541800    
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 1, 300)            0         
+_________________________________________________________________
+dense (Dense)                (None, 1, 1)              301       
+=================================================================
+Total params: 822,001
+Trainable params: 822,001
+Non-trainable params: 0
+_________________________________________________________________
+None
+2020-07-29 15:18:29.766074: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-07-29 15:18:29.818500: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:18:29.818983: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:18:29.820409: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:18:29.821664: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:18:29.822068: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:18:29.823603: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:18:29.824785: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:18:29.828049: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:18:29.830998: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:18:29.831321: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-07-29 15:18:29.837644: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3597960000 Hz
+2020-07-29 15:18:29.838265: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x7454b50 executing computations on platform Host. Devices:
+2020-07-29 15:18:29.838286: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-07-29 15:18:29.960735: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x7470440 executing computations on platform CUDA. Devices:
+2020-07-29 15:18:29.960786: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): TITAN Xp, Compute Capability 6.1
+2020-07-29 15:18:29.964017: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:18:29.964094: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:18:29.964131: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:18:29.964163: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:18:29.964194: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:18:29.964224: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:18:29.964255: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:18:29.964287: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:18:29.968400: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:18:29.968438: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:18:29.970358: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:18:29.970376: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:18:29.970382: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:18:29.973145: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:18:30.851431: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:18:30.851485: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:18:30.851500: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:18:30.851513: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:18:30.851525: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:18:30.851537: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:18:30.851548: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:18:30.851561: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:18:30.853428: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:18:30.853451: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:18:30.853457: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:18:30.853466: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:18:30.855427: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:18:30.856996: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:18:30.857024: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:18:30.857039: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:18:30.857051: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:18:30.857063: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:18:30.857075: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:18:30.857088: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:18:30.857100: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:18:30.859078: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:18:30.859096: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:18:30.859103: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:18:30.859108: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:18:30.861159: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+Using TensorFlow backend.
+WARNING:tensorflow:Entity <function Function._initialize_uninitialized_variables.<locals>.initialize_variables at 0x7fbd60171488> could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module 'gast' has no attribute 'Num'
+2020-07-29 15:18:35.033007: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:18:35.232273: I tensorflow/core/profiler/lib/profiler_session.cc:184] Profiler session started.
+2020-07-29 15:18:35.232461: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcupti.so.10.0'; dlerror: libcupti.so.10.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ohpc/pub/apps/cuDNN/cuda-10.0/cudnn-7.6.4.38/lib64:/usr/lib64/nvidia:/opt/ohpc/pub/apps/cuda-10.0/targets/x86_64-linux/lib:/opt/ohpc/pub/apps/cuda-10.0/lib64:/opt/ohpc/pub/apps/python3/3.6.9/lib:/opt/ohpc/pub/mpi/openmpi-gnu7/1.10.7/lib:/opt/ohpc/pub/compiler/gcc/7.3.0/lib64
+2020-07-29 15:18:35.232479: W tensorflow/core/profiler/lib/profiler_session.cc:192] Encountered error while starting profiler: Unavailable: CUPTI error: CUPTI could not be loaded or symbol could not be found.
+2020-07-29 15:18:35.299979: I tensorflow/core/platform/default/device_tracer.cc:588] Collecting 0 kernel records, 0 memcpy records.
+2020-07-29 15:18:35.300167: E tensorflow/core/platform/default/device_tracer.cc:70] CUPTI error: CUPTI could not be loaded or symbol could not be found.
+[+] Available GPUs
+['/device:GPU:0']
+[+] Available multiple GPU not found... Just use CPU! XD
+Train on 27881 samples, validate on 6971 samples
+Epoch 1/1000
+
+Epoch 00001: val_loss improved from inf to 0.00416, saving model to ../23_checkpoint.keras
+27881/27881 - 11s - loss: 0.0126 - val_loss: 0.0042
+Epoch 2/1000
+
+Epoch 00002: val_loss improved from 0.00416 to 0.00378, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0036 - val_loss: 0.0038
+Epoch 3/1000
+
+Epoch 00003: val_loss improved from 0.00378 to 0.00353, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0034 - val_loss: 0.0035
+Epoch 4/1000
+
+Epoch 00004: val_loss did not improve from 0.00353
+27881/27881 - 6s - loss: 0.0032 - val_loss: 0.0038
+Epoch 5/1000
+
+Epoch 00005: val_loss did not improve from 0.00353
+27881/27881 - 6s - loss: 0.0032 - val_loss: 0.0036
+Epoch 6/1000
+
+Epoch 00006: val_loss did not improve from 0.00353
+27881/27881 - 6s - loss: 0.0031 - val_loss: 0.0042
+Epoch 7/1000
+
+Epoch 00007: val_loss did not improve from 0.00353
+27881/27881 - 6s - loss: 0.0031 - val_loss: 0.0036
+Epoch 8/1000
+
+Epoch 00008: val_loss did not improve from 0.00353
+27881/27881 - 6s - loss: 0.0030 - val_loss: 0.0039
+Epoch 9/1000
+
+Epoch 00009: val_loss did not improve from 0.00353
+27881/27881 - 6s - loss: 0.0030 - val_loss: 0.0036
+Epoch 10/1000
+
+Epoch 00010: val_loss improved from 0.00353 to 0.00336, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0029 - val_loss: 0.0034
+Epoch 11/1000
+
+Epoch 00011: val_loss did not improve from 0.00336
+27881/27881 - 6s - loss: 0.0029 - val_loss: 0.0035
+Epoch 12/1000
+
+Epoch 00012: val_loss did not improve from 0.00336
+27881/27881 - 5s - loss: 0.0028 - val_loss: 0.0035
+Epoch 13/1000
+
+Epoch 00013: val_loss improved from 0.00336 to 0.00331, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0028 - val_loss: 0.0033
+Epoch 14/1000
+
+Epoch 00014: val_loss did not improve from 0.00331
+27881/27881 - 6s - loss: 0.0028 - val_loss: 0.0037
+Epoch 15/1000
+
+Epoch 00015: val_loss did not improve from 0.00331
+27881/27881 - 6s - loss: 0.0028 - val_loss: 0.0039
+Epoch 16/1000
+
+Epoch 00016: val_loss improved from 0.00331 to 0.00325, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0027 - val_loss: 0.0033
+Epoch 17/1000
+
+Epoch 00017: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0027 - val_loss: 0.0033
+Epoch 18/1000
+
+Epoch 00018: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0027 - val_loss: 0.0035
+Epoch 19/1000
+
+Epoch 00019: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0027 - val_loss: 0.0076
+Epoch 20/1000
+
+Epoch 00020: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0027 - val_loss: 0.0038
+Epoch 21/1000
+
+Epoch 00021: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0027 - val_loss: 0.0035
+Epoch 22/1000
+
+Epoch 00022: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0026 - val_loss: 0.0040
+Epoch 23/1000
+
+Epoch 00023: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0026 - val_loss: 0.0035
+Epoch 24/1000
+
+Epoch 00024: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0026 - val_loss: 0.0035
+Epoch 25/1000
+
+Epoch 00025: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0026 - val_loss: 0.0040
+Epoch 26/1000
+
+Epoch 00026: val_loss did not improve from 0.00325
+
+Epoch 00026: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+27881/27881 - 6s - loss: 0.0026 - val_loss: 0.0039
+Epoch 27/1000
+
+Epoch 00027: val_loss did not improve from 0.00325
+27881/27881 - 5s - loss: 0.0025 - val_loss: 0.0035
+Epoch 28/1000
+
+Epoch 00028: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0025 - val_loss: 0.0039
+Epoch 29/1000
+
+Epoch 00029: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0035
+Epoch 30/1000
+
+Epoch 00030: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0036
+Epoch 31/1000
+
+Epoch 00031: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0035
+Epoch 32/1000
+
+Epoch 00032: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0036
+Epoch 33/1000
+
+Epoch 00033: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0041
+Epoch 34/1000
+
+Epoch 00034: val_loss did not improve from 0.00325
+27881/27881 - 5s - loss: 0.0024 - val_loss: 0.0041
+Epoch 35/1000
+
+Epoch 00035: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0038
+Epoch 36/1000
+
+Epoch 00036: val_loss did not improve from 0.00325
+
+Epoch 00036: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+27881/27881 - 6s - loss: 0.0024 - val_loss: 0.0037
+Epoch 37/1000
+
+Epoch 00037: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0035
+Epoch 38/1000
+
+Epoch 00038: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0038
+Epoch 39/1000
+
+Epoch 00039: val_loss did not improve from 0.00325
+27881/27881 - 5s - loss: 0.0023 - val_loss: 0.0035
+Epoch 40/1000
+
+Epoch 00040: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0039
+Epoch 41/1000
+
+Epoch 00041: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0036
+Epoch 42/1000
+
+Epoch 00042: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0039
+Epoch 43/1000
+
+Epoch 00043: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0040
+Epoch 44/1000
+
+Epoch 00044: val_loss did not improve from 0.00325
+27881/27881 - 6s - loss: 0.0023 - val_loss: 0.0039
+Epoch 45/1000
+
+Epoch 00045: val_loss did not improve from 0.00325
+27881/27881 - 5s - loss: 0.0023 - val_loss: 0.0037
+Epoch 46/1000
+
+Epoch 00046: val_loss did not improve from 0.00325
+
+Epoch 00046: ReduceLROnPlateau reducing learning rate to 0.0001250000059371814.
+27881/27881 - 5s - loss: 0.0023 - val_loss: 0.0037
+Epoch 00046: early stopping
+after concate: (96, 10)
+Test RMSE: 5.138186
+Test MAE: 26.400953
+after concate: (96, 10)
+Test RMSE: 11.907813
+Test MAE: 141.796005
+after concate: (96, 10)
+Test RMSE: 9.780959
+Test MAE: 95.667159
+after concate: (673, 10)
+Test RMSE: 2.307726
+Test MAE: 5.325601
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+gru (GRU)                    (None, 1, 32)             4128      
+_________________________________________________________________
+gru_1 (GRU)                  (None, 1, 32)             6336      
+_________________________________________________________________
+gru_2 (GRU)                  (None, 1, 32)             6336      
+_________________________________________________________________
+gru_3 (GRU)                  (None, 1, 32)             6336      
+_________________________________________________________________
+dense (Dense)                (None, 1, 1)              33        
+=================================================================
+Total params: 23,169
+Trainable params: 23,169
+Non-trainable params: 0
+_________________________________________________________________
+None
+2020-07-29 15:23:32.916767: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-07-29 15:23:32.967221: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:23:32.967823: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:23:32.969257: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:23:32.970600: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:23:32.971029: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:23:32.972600: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:23:32.973815: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:23:32.977073: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:23:32.980084: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:23:32.980415: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-07-29 15:23:32.987082: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3597960000 Hz
+2020-07-29 15:23:32.987634: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x61c34c0 executing computations on platform Host. Devices:
+2020-07-29 15:23:32.987652: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-07-29 15:23:33.096184: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x61dee10 executing computations on platform CUDA. Devices:
+2020-07-29 15:23:33.096236: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): TITAN Xp, Compute Capability 6.1
+2020-07-29 15:23:33.099546: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:23:33.099619: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:23:33.099656: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:23:33.099688: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:23:33.099720: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:23:33.099752: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:23:33.099784: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:23:33.099816: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:23:33.105706: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:23:33.105778: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:23:33.108101: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:23:33.108116: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:23:33.108123: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:23:33.110862: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:23:34.179578: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:23:34.179632: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:23:34.179647: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:23:34.179660: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:23:34.179673: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:23:34.179690: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:23:34.179703: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:23:34.179716: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:23:34.181593: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:23:34.181616: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:23:34.181623: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:23:34.181628: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:23:34.183590: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:23:34.184763: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:23:34.184787: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:23:34.184801: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:23:34.184814: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:23:34.184826: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:23:34.184838: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:23:34.184851: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:23:34.184863: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:23:34.186740: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:23:34.186758: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:23:34.186764: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:23:34.186769: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:23:34.188728: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+Using TensorFlow backend.
+WARNING:tensorflow:Entity <function Function._initialize_uninitialized_variables.<locals>.initialize_variables at 0x7f9cfc0ff158> could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module 'gast' has no attribute 'Num'
+2020-07-29 15:24:23.471265: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-07-29 15:24:23.518118: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:24:23.518429: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:24:23.519711: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:24:23.520840: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:24:23.521121: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:24:23.522516: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:24:23.523583: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:24:23.526624: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:24:23.529452: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:24:23.529758: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-07-29 15:24:23.535777: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3597960000 Hz
+2020-07-29 15:24:23.536315: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x6323ed0 executing computations on platform Host. Devices:
+2020-07-29 15:24:23.536332: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-07-29 15:24:23.638163: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x633f820 executing computations on platform CUDA. Devices:
+2020-07-29 15:24:23.638505: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): TITAN Xp, Compute Capability 6.1
+2020-07-29 15:24:23.641436: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:24:23.641501: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:24:23.641531: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:24:23.641557: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:24:23.641582: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:24:23.641606: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:24:23.641631: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:24:23.641657: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:24:23.646556: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:24:23.646592: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:24:23.648532: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:24:23.648548: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:24:23.648554: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:24:23.651280: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:24:24.403614: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:24:24.403672: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:24:24.403687: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:24:24.403699: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:24:24.403711: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:24:24.403722: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:24:24.403734: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:24:24.403746: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:24:24.405604: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:24:24.405627: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:24:24.405633: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:24:24.405638: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:24:24.407584: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+2020-07-29 15:24:24.408787: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: TITAN Xp major: 6 minor: 1 memoryClockRate(GHz): 1.911
+pciBusID: 0000:05:00.0
+2020-07-29 15:24:24.408812: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-07-29 15:24:24.408825: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:24:24.408837: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-07-29 15:24:24.408848: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-07-29 15:24:24.408860: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-07-29 15:24:24.408871: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-07-29 15:24:24.408883: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-29 15:24:24.410768: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-07-29 15:24:24.410785: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-29 15:24:24.410791: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-07-29 15:24:24.410795: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-07-29 15:24:24.412757: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/device:GPU:0 with 11435 MB memory) -> physical GPU (device: 0, name: TITAN Xp, pci bus id: 0000:05:00.0, compute capability: 6.1)
+Using TensorFlow backend.
+WARNING:tensorflow:Entity <function Function._initialize_uninitialized_variables.<locals>.initialize_variables at 0x7f67f06597b8> could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module 'gast' has no attribute 'Num'
+2020-07-29 15:24:26.572513: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-07-29 15:24:26.764037: I tensorflow/core/profiler/lib/profiler_session.cc:184] Profiler session started.
+2020-07-29 15:24:26.764734: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcupti.so.10.0'; dlerror: libcupti.so.10.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ohpc/pub/apps/cuDNN/cuda-10.0/cudnn-7.6.4.38/lib64:/usr/lib64/nvidia:/opt/ohpc/pub/apps/cuda-10.0/targets/x86_64-linux/lib:/opt/ohpc/pub/apps/cuda-10.0/lib64:/opt/ohpc/pub/apps/python3/3.6.9/lib:/opt/ohpc/pub/mpi/openmpi-gnu7/1.10.7/lib:/opt/ohpc/pub/compiler/gcc/7.3.0/lib64
+2020-07-29 15:24:26.764787: W tensorflow/core/profiler/lib/profiler_session.cc:192] Encountered error while starting profiler: Unavailable: CUPTI error: CUPTI could not be loaded or symbol could not be found.
+2020-07-29 15:24:26.807567: I tensorflow/core/platform/default/device_tracer.cc:588] Collecting 0 kernel records, 0 memcpy records.
+2020-07-29 15:24:26.807735: E tensorflow/core/platform/default/device_tracer.cc:70] CUPTI error: CUPTI could not be loaded or symbol could not be found.
+[+] Available GPUs
+['/device:GPU:0']
+[+] Available multiple GPU not found... Just use CPU! XD
+Train on 27881 samples, validate on 6971 samples
+Epoch 1/1000
+
+Epoch 00001: val_loss improved from inf to 0.00377, saving model to ../23_checkpoint.keras
+27881/27881 - 6s - loss: 0.0062 - val_loss: 0.0038
+Epoch 2/1000
+
+Epoch 00002: val_loss improved from 0.00377 to 0.00366, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0033 - val_loss: 0.0037
+Epoch 3/1000
+
+Epoch 00003: val_loss improved from 0.00366 to 0.00352, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0032 - val_loss: 0.0035
+Epoch 4/1000
+
+Epoch 00004: val_loss did not improve from 0.00352
+27881/27881 - 3s - loss: 0.0030 - val_loss: 0.0037
+Epoch 5/1000
+
+Epoch 00005: val_loss improved from 0.00352 to 0.00350, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0035
+Epoch 6/1000
+
+Epoch 00006: val_loss did not improve from 0.00350
+27881/27881 - 3s - loss: 0.0029 - val_loss: 0.0037
+Epoch 7/1000
+
+Epoch 00007: val_loss did not improve from 0.00350
+27881/27881 - 3s - loss: 0.0028 - val_loss: 0.0037
+Epoch 8/1000
+
+Epoch 00008: val_loss did not improve from 0.00350
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0037
+Epoch 9/1000
+
+Epoch 00009: val_loss did not improve from 0.00350
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0039
+Epoch 10/1000
+
+Epoch 00010: val_loss improved from 0.00350 to 0.00344, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0034
+Epoch 11/1000
+
+Epoch 00011: val_loss did not improve from 0.00344
+27881/27881 - 3s - loss: 0.0027 - val_loss: 0.0037
+Epoch 12/1000
+
+Epoch 00012: val_loss did not improve from 0.00344
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0035
+Epoch 13/1000
+
+Epoch 00013: val_loss improved from 0.00344 to 0.00327, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0033
+Epoch 14/1000
+
+Epoch 00014: val_loss did not improve from 0.00327
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0038
+Epoch 15/1000
+
+Epoch 00015: val_loss did not improve from 0.00327
+27881/27881 - 3s - loss: 0.0025 - val_loss: 0.0036
+Epoch 16/1000
+
+Epoch 00016: val_loss did not improve from 0.00327
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0034
+Epoch 17/1000
+
+Epoch 00017: val_loss did not improve from 0.00327
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0033
+Epoch 18/1000
+
+Epoch 00018: val_loss improved from 0.00327 to 0.00319, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0032
+Epoch 19/1000
+
+Epoch 00019: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0057
+Epoch 20/1000
+
+Epoch 00020: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0024 - val_loss: 0.0035
+Epoch 21/1000
+
+Epoch 00021: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0033
+Epoch 22/1000
+
+Epoch 00022: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0040
+Epoch 23/1000
+
+Epoch 00023: val_loss did not improve from 0.00319
+
+Epoch 00023: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+27881/27881 - 3s - loss: 0.0023 - val_loss: 0.0037
+Epoch 24/1000
+
+Epoch 00024: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0021 - val_loss: 0.0035
+Epoch 25/1000
+
+Epoch 00025: val_loss did not improve from 0.00319
+27881/27881 - 3s - loss: 0.0021 - val_loss: 0.0036
+Epoch 26/1000
+
+Epoch 00026: val_loss improved from 0.00319 to 0.00310, saving model to ../23_checkpoint.keras
+27881/27881 - 3s - loss: 0.0021 - val_loss: 0.0031
+Epoch 27/1000
+
+Epoch 00027: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0021 - val_loss: 0.0035
+Epoch 28/1000
+
+Epoch 00028: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0021 - val_loss: 0.0042
+Epoch 29/1000
+
+Epoch 00029: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0021 - val_loss: 0.0035
+Epoch 30/1000
+
+Epoch 00030: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0036
+Epoch 31/1000
+
+Epoch 00031: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0037
+Epoch 32/1000
+
+Epoch 00032: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0036
+Epoch 33/1000
+
+Epoch 00033: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0037
+Epoch 34/1000
+
+Epoch 00034: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0038
+Epoch 35/1000
+
+Epoch 00035: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0033
+Epoch 36/1000
+
+Epoch 00036: val_loss did not improve from 0.00310
+
+Epoch 00036: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+27881/27881 - 3s - loss: 0.0020 - val_loss: 0.0034
+Epoch 37/1000
+
+Epoch 00037: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0019 - val_loss: 0.0035
+Epoch 38/1000
+
+Epoch 00038: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0019 - val_loss: 0.0036
+Epoch 39/1000
+
+Epoch 00039: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0033
+Epoch 40/1000
+
+Epoch 00040: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0036
+Epoch 41/1000
+
+Epoch 00041: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0033
+Epoch 42/1000
+
+Epoch 00042: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0039
+Epoch 43/1000
+
+Epoch 00043: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0037
+Epoch 44/1000
+
+Epoch 00044: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0036
+Epoch 45/1000
+
+Epoch 00045: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0035
+Epoch 46/1000
+
+Epoch 00046: val_loss did not improve from 0.00310
+
+Epoch 00046: ReduceLROnPlateau reducing learning rate to 0.0001250000059371814.
+27881/27881 - 3s - loss: 0.0018 - val_loss: 0.0036
+Epoch 47/1000
+
+Epoch 00047: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0036
+Epoch 48/1000
+
+Epoch 00048: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0036
+Epoch 49/1000
+
+Epoch 00049: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0036
+Epoch 50/1000
+
+Epoch 00050: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0035
+Epoch 51/1000
+
+Epoch 00051: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0036
+Epoch 52/1000
+
+Epoch 00052: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0035
+Epoch 53/1000
+
+Epoch 00053: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0037
+Epoch 54/1000
+
+Epoch 00054: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0038
+Epoch 55/1000
+
+Epoch 00055: val_loss did not improve from 0.00310
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0037
+Epoch 56/1000
+
+Epoch 00056: val_loss did not improve from 0.00310
+
+Epoch 00056: ReduceLROnPlateau reducing learning rate to 6.25000029685907e-05.
+27881/27881 - 3s - loss: 0.0017 - val_loss: 0.0036
+Epoch 00056: early stopping
+after concate: (96, 10)
+Test RMSE: 5.423511
+Test MAE: 29.414472
+after concate: (96, 10)
+Test RMSE: 11.830942
+Test MAE: 139.971182
+after concate: (96, 10)
+Test RMSE: 10.488317
+Test MAE: 110.004790
+after concate: (673, 10)
+Test RMSE: 2.112356
+Test MAE: 4.462047
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+gru (GRU)                    (None, 1, 300)            279900    
+_________________________________________________________________
+gru_1 (GRU)                  (None, 1, 300)            541800    
+_________________________________________________________________
+dense (Dense)                (None, 1, 1)              301       
+=================================================================
+Total params: 822,001
+Trainable params: 822,001
+Non-trainable params: 0
+_________________________________________________________________
+None
