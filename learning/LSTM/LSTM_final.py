@@ -55,6 +55,7 @@ df.loc[df["solar_intensity"]<0 , "solar_intensity"] = 0
 df = df.fillna(0)
 scaler = MinMaxScaler().fit(df)
 
+final_test = df.loc["2020-05-24 00:00:00": "2020-05-31 00:00:00"]
 final_test_5 = df.loc["2020-05-31 00:00:00":"2020-05-31 23:45:00"]
 final_test_3 = df.loc["2020-03-31 00:00:00":"2020-03-31 23:45:00"]
 final_test_1 = df.loc["2020-01-31 00:00:00":"2020-01-31 23:45:00"]
@@ -75,6 +76,7 @@ test = values[TRAIN_SPLIT:, :]
 # split into input and outputs
 train_X, train_y = xy_split(train, scaler)
 test_X, test_y = xy_split(test, scaler)
+final_test_X, final_test_y = xy_split(final_test, scaler)
 final_test_X_1, final_test_y_1 = xy_split(final_test_1, scaler)
 final_test_X_3, final_test_y_3 = xy_split(final_test_3, scaler)
 final_test_X_5, final_test_y_5 = xy_split(final_test_5, scaler)
@@ -114,9 +116,12 @@ callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard,
 
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(1000,activation="relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.LSTM(1000, activation="relu", return_sequences=True))
-multi_step_model.add(tf.keras.layers.LSTM(1000, activation="relu", return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(600, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.Dropout(0.3))
+multi_step_model.add(tf.keras.layers.LSTM(600, activation = "relu",  return_sequences=True))
+multi_step_model.add(tf.keras.layers.Dropout(0.3))
+multi_step_model.add(tf.keras.layers.LSTM(600, activation = "relu", return_sequences=True))
+multi_step_model.add(tf.keras.layers.Dropout(0.3))
 multi_step_model.add(tf.keras.layers.Dense(1))
 
 
@@ -172,5 +177,7 @@ def make_prediction(model, X, y, plot_name):
 
 make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_test_1")
 make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_test_3")
+
 make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_test_5")
-# make_prediction(multi_step_model, final_test_X_6, final_test_y_6, "final_test_6")
+make_prediction(multi_step_model, final_test_X, final_test_y, "final_test")
+print(multi_step_model.summary())
