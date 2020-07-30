@@ -105,10 +105,10 @@ callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
                                       save_weights_only=True,
                                       save_best_only=True)
 
-callback_early_stopping = EarlyStopping(monitor='val_loss', patience=100, verbose=1)
+callback_early_stopping = EarlyStopping(monitor='val_loss', patience=30, verbose=1)
 
 callback_tensorboard = TensorBoard(log_dir='../23_logs/', histogram_freq=0, write_graph=False)
-callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_lr=1e-9, patience=30,verbose=1)
+callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_lr=1e-9, patience=10,verbose=1)
 callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard, callback_reduce_lr]
 
 from tensorflow.keras import layers
@@ -145,8 +145,11 @@ from kerastuner.tuners import RandomSearch
 # print(tuner.results_summary())
 
 multi_step_model = tf.keras.models.Sequential()
-multi_step_model.add(tf.keras.layers.LSTM(350, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-multi_step_model.add(tf.keras.layers.LSTM(350, activation = "relu",  return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(200, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.LSTM(50, activation = "relu",  return_sequences=True))
+multi_step_model.add(tf.keras.layers.RepeatVector(train_X.shape[1]))
+multi_step_model.add(tf.keras.layers.LSTM(200, activation = "relu",  return_sequences=True))
+multi_step_model.add(tf.keras.layers.LSTM(50, activation = "relu",  return_sequences=True))
 multi_step_model.add(tf.keras.layers.Dense(1))
 multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(lr=0.001), loss='mse')
 
@@ -197,48 +200,7 @@ def make_prediction(model, X, y, plot_name):
     plt.legend()
     plt.savefig("output/"+plot_name+".png")
 
-make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_1")
-make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_3")
-make_prediction(multi_step_model, final_test_X_5, final_test_y_5, "final_5")
+make_prediction(multi_step_model, final_test_X, final_test_y, "final")
 print(multi_step_model.summary())
 
 
-# %%
-#2017 8 3
-y = 17
-date =3
-idx = 3
-base = pd.read_csv("../../data/future/SURFACE_ASOS_131_MI_2017-08_2017-08_2017.csv", encoding='euc-kr').fillna(0)
-base.columns
-
-base = base[['일시', '기온(°C)','풍속(m/s)', '습도(%)','일사(MJ/m^2)','일조(Sec)']]
-base = base.rename(columns={'일시':'datetime', '기온(°C)':"temperature",'풍속(m/s)':"wind_speed", '습도(%)':"humidity",
-                            "일조(Sec)":"solar_radiation",'일사(MJ/m^2)':"solar_intensity"
-})
-base.datetime = pd.to_datetime(base.datetime, infer_datetime_format=True)
-base["difference"] = base["datetime"].sub(pd.to_datetime("2017-01-01", infer_datetime_format=True), axis=0)/ np.timedelta64(1, 'D')
-
-base = base.set_index('datetime')
-base = base[f"20{y}-08-0{date} 00:00":f"20{y}-08-0{date} 23:59"]
-
-
-
-
-#%%
-out = pd.DataFrame()
-period_min = 15
-out["result"] = 0
-out["temperature"] = base["temperature"].resample(f'{str(period_min)}T').mean()
-out["wind_speed"] = base["wind_speed"] .resample(f'{str(period_min)}T').mean()
-out["humidity"]= base["humidity"].resample(f'{str(period_min)}T').mean()
-out["solar_intensity"] = base["solar_intensity"].resample(f'{str(period_min)}T').mean().diff()
-out["solar_radiation"] = base["solar_radiation"].resample(f'{str(period_min)}T').mean().diff()
-out["date"] = 31
-out["month"] = 7
-out["hour"] = pd.DatetimeIndex(out.index).hour
-out["difference"] = base["difference"]
-out.loc[out["solar_intensity"] < 0 , "solar_intensity"] = 0
-out.loc[out["solar_radiation"] < 0 , "solar_radiation"] = 0
-out = out.fillna(0)
-out_X, out_y = xy_split(out, scaler)
-make_prediction(multi_step_model, out_X, out_y, "final_7")
