@@ -15,7 +15,7 @@ mpl.rcParams['axes.grid'] = False
 
 # %%
 tf.random.set_seed(10)
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 BUFFER_SIZE = 10000
 EPOCH = 1000
 DROPOUT = 0.2
@@ -43,7 +43,7 @@ def xy_split(d, scale, y=True):
 
 
 tf.random.set_seed(42)
-raw_df = pd.read_csv("data/datefrom1st.csv")
+raw_df = pd.read_csv("../../data/datefrom1st.csv")
 raw_df.index = raw_df.datetime
 
 df = raw_df
@@ -105,31 +105,31 @@ callback_checkpoint = ModelCheckpoint(filepath=path_checkpoint,
                                       save_weights_only=True,
                                       save_best_only=True)
 
-callback_early_stopping = EarlyStopping(monitor='val_loss', patience=30, verbose=1)
+callback_early_stopping = EarlyStopping(monitor='val_loss', patience=100, verbose=1)
 
 callback_tensorboard = TensorBoard(log_dir='../23_logs/', histogram_freq=0, write_graph=False)
-callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_lr=1e-7, patience=10,verbose=1)
+callback_reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_lr=1e-9, patience=30,verbose=1)
 callbacks = [callback_early_stopping, callback_checkpoint, callback_tensorboard, callback_reduce_lr]
 
 from tensorflow.keras import layers
 from kerastuner.tuners import RandomSearch
 
 
-def build_model(hp):
-    multi_step_model = tf.keras.models.Sequential()
+#def build_model(hp):
+#    multi_step_model = tf.keras.models.Sequential()
 
-    multi_step_model.add(tf.keras.layers.GRU(units=hp.Int('units', min_value = 100, max_value=400, step=50), activation=hp.Choice('activation', ["relu", "tanh"]), return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
-    multi_step_model.add(tf.keras.layers.GRU(units=hp.Int('units', min_value=100, max_value=400, step=50),
-                                             activation=hp.Choice('activation', ["relu", "tanh"]),
-                                             return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+#    multi_step_model.add(tf.keras.layers.GRU(units=hp.Int('units', min_value = 100, max_value=400, step=50), activation=hp.Choice('activation', ["relu", "tanh"]), return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+#    multi_step_model.add(tf.keras.layers.GRU(units=hp.Int('units', min_value=100, max_value=400, step=50),
+#                                             activation=hp.Choice('activation', ["relu", "tanh"]),
+#                                             return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
 
     #multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
     #multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu",  return_sequences=True))
     #multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu",  return_sequences=True))
     #multi_step_model.add(tf.keras.layers.GRU(32, activation = "relu",  return_sequences=True))
-    multi_step_model.add(tf.keras.layers.Dense(1))
-    multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(hp.Choice('learning_rate', values=[1e-2, 1e-3, 1e-4])), loss='mse')
-    return multi_step_model
+#    multi_step_model.add(tf.keras.layers.Dense(1))
+#    multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(hp.Choice('learning_rate', values=[1e-2, 1e-3, 1e-4])), loss='mse')
+#    return multi_step_model
 
 
 # tuner = RandomSearch(
@@ -144,8 +144,11 @@ def build_model(hp):
 #                                verbose=2, shuffle=True, callbacks=callbacks)
 # print(tuner.results_summary())
 
-
-
+multi_step_model = tf.keras.models.Sequential()
+multi_step_model.add(tf.keras.layers.GRU(300, activation = "relu", return_sequences=True, input_shape=(train_X.shape[1], train_X.shape[2])))
+multi_step_model.add(tf.keras.layers.GRU(300, activation = "relu",  return_sequences=True))
+multi_step_model.add(tf.keras.layers.Dense(1))
+multi_step_model.compile(optimizer=tf.keras.optimizers.Adam(lr=0.001), loss='mse')
 
 print(f"[+] Available GPUs")
 print(get_available_gpus())
@@ -177,7 +180,7 @@ def make_prediction(model, X, y, plot_name):
     inv_yhat = concatenate((yhat, X_revert), axis = 1)
     inv_xyhat = scaler.inverse_transform(inv_yhat)
     inv_yhat = inv_xyhat[:, 0]
-    np.savetxt(plot_name+".csv", inv_yhat, delimiter= ",")
+    np.savetxt("output/"+plot_name+".csv", inv_yhat, delimiter= ",")
     y_revert = y.reshape((len(y), 1))
     inv_y1 = concatenate((y_revert, X_revert), axis = 1)
     print("after concate: {}".format(inv_y1.shape))
@@ -192,7 +195,7 @@ def make_prediction(model, X, y, plot_name):
     plt.plot(inv_y, 'b', label = 'true')
     plt.plot(inv_yhat, 'g', label = 'pred')
     plt.legend()
-    plt.savefig(plot_name+".png")
+    plt.savefig("output/"+plot_name+".png")
 
 make_prediction(multi_step_model, final_test_X_1, final_test_y_1, "final_1")
 make_prediction(multi_step_model, final_test_X_3, final_test_y_3, "final_3")
